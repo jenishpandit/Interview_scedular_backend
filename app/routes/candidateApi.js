@@ -1,9 +1,10 @@
 import express from "express";
-import createCandidate from "../services/candidate.js";
+import createCandidate from "../apiLogic/candidate.js";
 const candidateRouter = express.Router();
+import imageupload from '../controllers/multer.js';
 
 //creating candidate
-candidateRouter.post('/candidate', async (req, res) => {
+candidateRouter.post('/candidate',imageupload, async (req, res) => {
     createCandidate(req, res);
     console.log('data inserted successfully');
 })

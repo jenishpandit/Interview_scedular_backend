@@ -5,17 +5,20 @@ import candidates from '../schemas/candidateSchema.js';
 async function createCandidate(req, res, next)
 {
     try{
-        let rawData = req.body;
-        // if(!rawData) return res.status(400).json({message : "technology_name is null"});       
-        let data = await technologies.create(rawData);
+        // let rawData = req.body;
+        let image = req.file.path;
+        console.log('image : ',image);
+        if(!image) return res.status(400).json({message : " is null"});       
+        let data = await candidates.create({resume: image});
+        console.log('image upload');
         res.status(200).json({message : "data inserted"});
     }catch(err)
     {
         console.log('err',err);
         let errMessage = err;
-        if(err.errors.technology_name.message) 
+        if(err) 
             {
-                errMessage = 'please enter technology_name';
+                errMessage = 'please enter ';
             }
         res.status(400).json({message : errMessage});
     }

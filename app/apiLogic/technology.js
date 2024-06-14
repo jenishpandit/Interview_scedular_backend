@@ -40,10 +40,12 @@ async function readtechnology(req, res, next)
     try{
         let rawData = req.params.id;
         let data = await technologies.findOne({_id : rawData});
+        let resMessage = data; 
+        if(!data) resMessage = "invalid id"; 
         console.log(data);
-        res.status(200).json({data : data});
+        res.status(200).json({data : resMessage});
     }catch(err){
-        console.log('ERROR', err);
+        console.log('ERROR', err.message);
         let errMessage = 'internal server error';
         if (err.kind === "ObjectId") 
         {

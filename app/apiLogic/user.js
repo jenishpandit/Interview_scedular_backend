@@ -7,6 +7,7 @@ async function register(req, res)
 {
     try{
         let rawData = req.body;
+        let image = req.file
         let data = await userSchema.create(rawData);
         // console.log(rawData);
          res.json(rawData);
