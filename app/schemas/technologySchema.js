@@ -5,7 +5,8 @@ const technology = mongoose.Schema(
         technology_name : 
         {
             type : String,
-            required : true
+            required : true,
+            unique : true
         }
     }
 )

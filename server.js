@@ -9,7 +9,11 @@ import techRouter from './app/routes/technologyApi.js';
 import candidateRouter from './app/routes/candidateApi.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { globalError } from './app/controllers/globalError.js';
+import AppError from './utils/AppError.js'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,7 +30,15 @@ app.use('/', techRouter);
 
 //==========CANDIDATES_API=======================
 app.use('/', candidateRouter);
-app.use('/uploads',express.static(path.join(__dirname,'/uploads')))
+app.use('/uploads',express.static(path.join(__dirname,'/uploads'))) // uploading resume
+
+app.all('*', (req, res, next) => {
+    console.log("I am running !!")
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+// Global error
+app.use(globalError)
 
 // //conncting to the databases
 mongoose.connect('mongodb://localhost:27017/interview_scheduler')

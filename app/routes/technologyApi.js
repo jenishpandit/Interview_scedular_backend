@@ -3,10 +3,7 @@ import {createTechnology, readtechnologies, readtechnology, updatingTechnology, 
 const techRouter = express.Router();
 
 //creating technology
-techRouter.post('/technology', async (req, res) => {
-    createTechnology(req, res);
-    console.log('data inserted successfully');
-})
+techRouter.post('/technology', createTechnology)
 
 //reading all
 techRouter.get('/technologies', async (req, res) => {
