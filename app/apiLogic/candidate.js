@@ -9,34 +9,20 @@ async function createCandidate(req, res, next)
     try{
         let rawData = req.body.data;
         let requestBody = req.body;
-        let data = JSON.parse(requestBody.data);
         let image = req.file.path;
-        console.log('image : ',image,'data : ', data);
+        let { first_name, last_name, email, phone_number, technology_id, type  } = requestBody;
+
         if(!image) return res.status(400).json({message : " is null"});      
-        console.log('fgh',req.body); // inspect the structure of req.body
+        
         let candidateData = {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            phone_number: data.phone_number,
-            technology_id: data.technology_id,
-            type: data.type,
+            first_name, last_name, email, phone_number, technology_id, type ,
             resume: image
         };
-          console.log(candidateData)
-        let Data = await candidates.create(candidateData);
-        console.log('image upload');
+        await candidates.create(candidateData);
         res.status(200).json({message : "data inserted"});
     }catch(err)
     {
-        console.log('err',err);
-        let errMessage = err;
-        if(err) 
-            {
-                errMessage = err.message;
-            }
-            console.log(errMessage)
-        res.status(400).json({message : errMessage});
+      next(err)
     }
 }
 

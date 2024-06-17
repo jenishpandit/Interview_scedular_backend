@@ -4,10 +4,7 @@ const candidateRouter = express.Router();
 import imageupload from '../controllers/multer.js';
 
 //creating candidate
-candidateRouter.post('/candidate',imageupload, async (req, res) => {
-    createCandidate(req, res);
-    console.log('data inserted successfully');
-})
+candidateRouter.post('/candidate',imageupload, createCandidate)
 
 //reading all candidate
 candidateRouter.get('/candidates', async (req, res) => {

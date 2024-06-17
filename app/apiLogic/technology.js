@@ -10,7 +10,7 @@ async function createTechnology(req, res, next)
         res.status(200).json({message : "data inserted"});
     }
     catch(err){
-        console.log("Error", err)
+        console.log("Error : ", err)
         next(err)
     }
 }
