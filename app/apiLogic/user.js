@@ -3,17 +3,17 @@ import userSchema from '../schemas/userSchema.js';
 import { jwtAuthMiddleware, generateToken } from '../controllers/jwt.js';
 
 //creating user
-async function register(req, res)
+async function register(req, res, next)
 {
     try{
         let rawData = req.body;
         let image = req.file
         let data = await userSchema.create(rawData);
         // console.log(rawData);
-         res.json(rawData);
+         res.json("data inserted");
      }catch(err){
          console.log(err);
-         res.status(400).send(err);
+         next(err)
      }
 }
 
