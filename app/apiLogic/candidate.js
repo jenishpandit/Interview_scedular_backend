@@ -26,11 +26,38 @@ async function createCandidate(req, res, next)
     }
 }
 
-//reading candidate
+//reading all candidate
 async function readCandidates(req, res, next)
 {
     try{
-        let data = await candidates.find({});
+        // let data = await candidates.find({});
+        let data = await candidates.aggregate([
+            {
+              $lookup: 
+              {
+                from: "technologies",
+                localField: "technology_id",
+                foreignField: "_id",
+                as: "tech"
+              }
+            },
+            {
+              $addFields: 
+              {
+                candidate_technology: 
+                {
+                  "$arrayElemAt" : ["$tech.technology_name",0]
+                }
+              }
+            },
+            {
+              $project: {
+                tech : 0,
+                technology_id : 0,
+          
+              }
+            }
+          ])
         res.status(200).json({data : data});
 
     }catch(err){

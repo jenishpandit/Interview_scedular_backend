@@ -13,15 +13,6 @@ export const globalError = (err, req, res, next) => {
         });
     }
 
-    // // 	{
-	// 	"first_name" : "nikunj",
-	// 	"last_name" : "italiya",
-	// 	"email" : "abcd@gmail.com",
-	// 	"phone_number" : "+919876543223",
-	// 	"technology_id" : "666a9d73049faf8f82cc242f",
-	// 	"type" : "WFH"
-	// }
-
     res.status(err.statusCode || 500).json({
         status: err.status || 'error',
         message: err.message
