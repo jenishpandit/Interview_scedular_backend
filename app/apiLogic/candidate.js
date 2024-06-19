@@ -100,7 +100,7 @@ async function updatingCandidate(req, res, next)
             candidateData = { resume : image};
           }
         console.log('rd',rawData,"rf", image);
-        let candidateData = {rawData , resume : image};
+        candidateData = {rawData , resume : image};
         let data = await candidates.findByIdAndUpdate(id, candidateData);
         let resMessage = 'data updated'; 
         if(!data) resMessage = "invalid id"; 
