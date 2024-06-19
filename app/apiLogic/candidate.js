@@ -33,7 +33,8 @@ async function readCandidates(req, res, next)
 {
     try{
         // let data = await candidates.find({});
-        let data = await candidates.aggregate([
+        let data = await candidates.aggregate(
+          [
             {
               $lookup: 
               {
@@ -54,9 +55,7 @@ async function readCandidates(req, res, next)
             },
             {
               $project: {
-                tech : 0,
-                technology_id : 0,
-          
+                tech : 0
               }
             }
           ])
@@ -91,9 +90,15 @@ async function updatingCandidate(req, res, next)
     try{
         let id = req.params.id;
         let rawData = req.body;
-        let image = req.file.path;
+        let image = req.file;
+        let candidateData;
+        if(image)
+          {
+            image = req.file.path;
+            candidateData = { resume : image};
+          }
         console.log('rd',rawData,"rf", image);
-        let candidateData = {rawData , resume : image};
+        candidateData = {...rawData};
         let data = await candidates.findByIdAndUpdate(id, candidateData);
         let resMessage = 'data updated'; 
         if(!data) resMessage = "invalid id"; 
