@@ -55,7 +55,6 @@ async function readCandidates(req, res, next)
             {
               $project: {
                 tech : 0,
-                technology_id : 0,
           
               }
             }
