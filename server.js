@@ -9,7 +9,7 @@ import techRouter from './app/routes/technologyApi.js';
 import candidateRouter from './app/routes/candidateApi.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { globalError } from './app/controllers/globalError.js';
+import globalError from './app/controllers/globalError.js';
 import AppError from './utils/AppError.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,7 +33,7 @@ app.use('/', candidateRouter);
 app.use('/uploads',express.static(path.join(__dirname,'/uploads'))) // uploading resume
 
 app.all('*', (req, res, next) => {
-    console.log("I am running !!")
+    console.log("unauthorised api accessing")
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 

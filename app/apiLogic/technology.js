@@ -1,5 +1,6 @@
 import express from "express";
 import technologies from "../schemas/technologySchema.js";
+import candidates from "../schemas/candidateSchema.js";
 
 //creating technology
 async function createTechnology(req, res, next)
@@ -10,7 +11,7 @@ async function createTechnology(req, res, next)
         res.status(200).json({message : "data inserted"});
     }
     catch(err){
-        console.log("Error : ", err)
+        // console.log("Error : ", err)     
         next(err)
     }
 }
@@ -74,11 +75,17 @@ async function deletingTechnology(req, res, next)
 {
     try{
         let id = req.params.id;
-        let rawData = req.body;
-        let data = await technologies.findByIdAndDelete(id);
-        res.status(200).json({message : "data deleted"});
-
-    }catch(err){
+        console.log('id',id);
+        let isTech = await candidates.findOne({technology_id : id});
+        let message = 'data not deleted'
+        if(!isTech) 
+            {
+                await technologies.findByIdAndDelete(id);
+                message = 'data deleted';
+            }
+            res.status(200).json({message : message});
+    }
+    catch(err){
         console.log(err);
         let errMessage = 'internal server error';
         if (err.kind === "ObjectId") 

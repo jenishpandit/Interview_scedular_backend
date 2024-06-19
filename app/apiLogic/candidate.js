@@ -1,19 +1,21 @@
 import express from "express";
 import candidates from '../schemas/candidateSchema.js';
 import fs from 'fs';
+import technologies from "../schemas/technologySchema.js";
 
 //creating candidate
 async function createCandidate(req, res, next)
 {
     
     try{
-        let rawData = req.body.data;
         let requestBody = req.body;
         let image = req.file.path;
+        console.log(requestBody);
         let { first_name, last_name, email, phone_number, technology_id, type  } = requestBody;
-
-        if(!image) return res.status(400).json({message : " is null"});      
-        
+        if(!image) return res.status(400).json({message : "resume is not inserted"});      
+        let isTech = await technologies.findOne({_id : technology_id});
+        console.log('istech',isTech);
+        if(!isTech) return res.status(400).json({status : "error" , message : 'technology_id is not correct or null'}); 
         let candidateData = {
             first_name, last_name, email, phone_number, technology_id, type ,
             resume: image
@@ -62,7 +64,7 @@ async function readCandidates(req, res, next)
 
     }catch(err){
         console.log(err);
-        res.status(400).json({message : err});
+        next(err);
     }
 }
 
@@ -78,13 +80,8 @@ async function readCandidate(req, res, next)
         console.log(data);
         res.status(200).json({data : resMessage});
     }catch(err){
-        console.log('ERROR', err.message);
-        let errMessage = 'internal server error';
-        if (err.kind === "ObjectId") 
-        {
-            errMessage = 'Invalid ID';
-        }
-        res.status(400).json({message : errMessage});
+        console.log('ERRoR', err.message);
+        next(err)
     }
 }
 
@@ -94,7 +91,10 @@ async function updatingCandidate(req, res, next)
     try{
         let id = req.params.id;
         let rawData = req.body;
-        let data = await candidates.findByIdAndUpdate(id, rawData);
+        let image = req.file.path;
+        console.log('rd',rawData,"rf", image);
+        let candidateData = {rawData , resume : image};
+        let data = await candidates.findByIdAndUpdate(id, candidateData);
         let resMessage = 'data updated'; 
         if(!data) resMessage = "invalid id"; 
         console.log(data);
@@ -102,12 +102,7 @@ async function updatingCandidate(req, res, next)
 
     }catch(err){
         console.log(err);
-        let errMessage = 'internal server error';
-        if (err.kind === "ObjectId") 
-        {
-            errMessage = 'Invalid ID';
-        }
-        res.status(400).json({message : errMessage});
+        next(err);
     }
 }
 

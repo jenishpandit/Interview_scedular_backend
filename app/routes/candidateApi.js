@@ -13,16 +13,10 @@ candidateRouter.get('/candidates', async (req, res) => {
 })
 
 //reading by id of candidate
-candidateRouter.get('/candidate/:id', async (req, res) => {
-    readCandidate(req, res);
-    console.log('data showed by id successfully');
-})
+candidateRouter.get('/candidate/:id', readCandidate)
 
 //updating candidate by id
-candidateRouter.put('/candidate/:id', async (req, res) => {
-    updatingCandidate(req, res);
-    console.log('data updated by id successfully');
-})
+candidateRouter.put('/candidate/:id', imageupload, updatingCandidate);
 
 //deleting candidate by id
 candidateRouter.delete('/candidate/:id', async (req, res) => {
