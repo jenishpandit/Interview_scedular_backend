@@ -55,7 +55,9 @@ async function readCandidates(req, res, next)
             },
             {
               $project: {
-                tech : 0
+                tech : 0,
+                technology_id : 0,
+          
               }
             }
           ])
@@ -98,7 +100,7 @@ async function updatingCandidate(req, res, next)
             candidateData = { resume : image};
           }
         console.log('rd',rawData,"rf", image);
-        candidateData = {...rawData};
+        let candidateData = {rawData , resume : image};
         let data = await candidates.findByIdAndUpdate(id, candidateData);
         let resMessage = 'data updated'; 
         if(!data) resMessage = "invalid id"; 
