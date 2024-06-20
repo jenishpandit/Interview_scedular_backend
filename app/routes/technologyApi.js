@@ -1,5 +1,5 @@
 import express from "express";
-import {createTechnology, readtechnologies, readtechnology, updatingTechnology, deletingTechnology} from '../apiLogic/technology.js';
+import {createTechnology, readtechnologies, readtechnology, updatingTechnology, deletingTechnology} from '../controllers/technology.js';
 const techRouter = express.Router();
 
 //creating technology

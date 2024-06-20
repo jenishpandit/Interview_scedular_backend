@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 // import { Timestamps, Unique } from "typeorm";
 
-const users = mongoose.Schema(
+const userSchema = mongoose.Schema(
     {
         email : 
         {
@@ -21,5 +21,5 @@ const users = mongoose.Schema(
     }
 )
 
-const user = mongoose.model("users", users);
-export default user;
+const users = mongoose.model("users", userSchema);
+export default users;

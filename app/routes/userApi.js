@@ -1,5 +1,5 @@
 import express from "express";
-import {register, login} from "../apiLogic/user.js";
+import {register, login} from "../controllers/user.js";
 const authRouter = express.Router();
 
 authRouter.post('/register', register)

@@ -1,7 +1,7 @@
 import express from "express";
-import {createCandidate, readCandidates, readCandidate, updatingCandidate, deletingCandidate} from "../apiLogic/candidate.js";
+import {createCandidate, readCandidates, readCandidate, updatingCandidate, deletingCandidate} from "../controllers/candidate.js";
 const candidateRouter = express.Router();
-import imageupload from '../controllers/multer.js';
+import imageupload from '../middlewares/multer.js';
 
 //creating candidate
 candidateRouter.post('/candidate',imageupload, createCandidate)

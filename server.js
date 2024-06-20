@@ -9,12 +9,10 @@ import techRouter from './app/routes/technologyApi.js';
 import candidateRouter from './app/routes/candidateApi.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import globalError from './app/controllers/globalError.js';
+import globalError from './app/middlewares/globalError.js';
 import AppError from './utils/AppError.js'
 import noteRouter from './app/routes/noteApi.js';
-import interviewRouter from './app/routes/interviewApi.js';
-import interviewTypeRouter from './app/routes/interview_typeApi.js';
-
+import interviewRouter from './app/routes/interviewApi.js'
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
@@ -35,14 +33,11 @@ app.use('/', techRouter);
 app.use('/', candidateRouter);
 app.use('/uploads',express.static(path.join(__dirname,'/uploads'))) // uploading resume
 
-//========INTERVIEW TYPE API=====================
-app.use('/', interviewTypeRouter);
-
 //============NOTES API==========================
-// app.use('/', noteRouter);
+app.use('/', noteRouter);
 
 //==========INTERVIEW API========================
-// app.use('/', interviewRouter);
+app.use('/', interviewRouter);
 
 app.all('*', (req, res, next) => {
     console.log("unauthorised api accessing")

@@ -3,11 +3,10 @@ import interviews from "../schemas/interviewSchema.js";
 //CREATING interview
 async function createInterview( req, res, next)
 {
-    console.log('[[[[[[[[[[[[[[[[')
     try
     {
         let rawData = req.body;
-        console.log(rawData);
+        console.log('rd : ',rawData);
         let data = await interviews.create(rawData);
         res.status(201).json({message : "data inserted"});
     }

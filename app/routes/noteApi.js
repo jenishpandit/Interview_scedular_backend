@@ -1,6 +1,6 @@
 import express from "express";
 // import { deleteModel } from "mongoose";
-import {createNote, readNotes, readNote, updateNote, deleteNote} from '../apiLogic/note.js'
+import {createNote, readNotes, readNote, updateNote, deleteNote} from '../controllers/note.js'
 
 const noteRouter = express.Router();
 

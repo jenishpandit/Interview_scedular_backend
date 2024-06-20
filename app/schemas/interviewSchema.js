@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import candidates from './candidateSchema.js';
 import users from './userSchema.js';
-import interview_types from './interview_type_schema.js'
 // import { date, required } from 'joi';
 // import { Timestamp } from 'typeorm';
 
@@ -13,7 +12,7 @@ const interviewSchema = mongoose.Schema(
             ref : candidates,
             required : true
         },
-        user_id :
+        created_by :
         {
             type : mongoose.Schema.Types.ObjectId,
             ref : users,
@@ -24,10 +23,10 @@ const interviewSchema = mongoose.Schema(
             type : Date,
             required : true
         },
-        interview_type_id :
+        interview_type :
         {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : interview_types,
+            type : String,
+            enum : ['Online', 'Offline'],
             required : true
         },
         location :

@@ -1,5 +1,5 @@
 import express from 'express';
-import {createInterview, readInterviews, readInterview, updateInterview, deleteInterview} from '../apiLogic/interview.js';
+import {createInterview, readInterviews, readInterview, updateInterview, deleteInterview} from '../controllers/interview.js';
 const interviewRouter = express.Router();
 
 //creating interview
@@ -12,7 +12,7 @@ interviewRouter.get('/interviews', readInterviews);
 interviewRouter.get('/interview/:id', readInterview);
 
 //updating interview by id
-interviewRouter.put('/iterview/:id', updateInterview);
+interviewRouter.put('/interview/:id', updateInterview);
 
 //deleting interview by id
 interviewRouter.delete('/interview/:id', deleteInterview);
