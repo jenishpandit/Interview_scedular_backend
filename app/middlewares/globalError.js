@@ -26,21 +26,29 @@ const globalError = ( err, req, res, next) => {
     let message = err.message || 'an unknown error occurred';
     const errCode = err.code;
     let index = err.index;
-    // let kind = err.errors.email.kind;
-    // console.log(kind);
+    // let kind = err.errors.technology_name.kind;
+    let kind = err.errors ? Object.values(err.errors).map(x => ({ ...x })) : [];
+    let k = kind ? kind[0].kind : [];
+    console.log("kind :", kind, "real kind : ", k);
+    console.log("fgh", err.kind);
     // handelling duplicate key error
     if(err.code === 11000)
         {
+            console.log("in the error repeatation field validation");
             const field = err.keyValue;
             message = Object.keys(field)[index] + ' : invalid or repeated';
             statusCode = 409;
             console.log(message);
         }
+
     // handelling required field error
-    // if(kind === 'required')
-    //     {
-    //         console.log('H E L L L   Y  E A   H');
-    //     }
+    if(k === 'required')
+        {
+            console.log("in the error required field validation");
+            message = kind[0].path + ' is required';
+            console.log('error message : ', message);
+        }
+
     // sending error response
     res.status(statusCode).json(
     {

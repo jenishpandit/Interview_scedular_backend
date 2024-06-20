@@ -51,6 +51,9 @@ async function updatingTechnology(req, res, next)
     try{
         let id = req.params.id;
         let rawData = req.body;
+        let isTechnology = await technologies.findOne({_id : id});
+        console.log('checking candidate : ', isTechnology);
+        if(!isTechnology) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let data = await technologies.findByIdAndUpdate(id, rawData);
         res.status(200).json({message : "data updated"});
 
@@ -66,6 +69,9 @@ async function deletingTechnology(req, res, next)
     try{
         let id = req.params.id;
         console.log('id',id);
+        let isTechnology = await technologies.findOne({_id : id});
+        console.log('checking candidate : ', isTechnology);
+        if(!isTechnology) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let isTech = await candidates.findOne({technology_id : id});
         let message = 'data not deleted'
         if(!isTech) 

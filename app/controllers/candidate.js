@@ -54,10 +54,9 @@ async function readCandidates(req, res, next)
               }
             },
             {
-              $project: {
-                tech : 0,
-                technology_id : 0,
-          
+              $project:
+              {
+                tech : 0
               }
             }
           ])
@@ -93,19 +92,22 @@ async function updatingCandidate(req, res, next)
         let id = req.params.id;
         let rawData = req.body;
         let image = req.file;
-        let candidateData = {...rawData};
-        if(image)
+        let isCandidate = await candidates.findOne({_id : id});
+        console.log('checking candidate : ', isCandidate);
+        if(!isCandidate) return res.status(400).json({status : "error" , message : "invalid or repeated"})
+          let candidateData = {...rawData};
+          if(image)
           {
             image = req.file.path;
             candidateData.resume = image;
           }
-        console.log('rd',rawData,"rf", image);
-        let data = await candidates.findByIdAndUpdate(id, candidateData);
-        let resMessage = 'data updated'; 
-        if(!data) resMessage = "invalid id"; 
-        console.log(data);
-        res.status(200).json({data : resMessage});
-
+          console.log('rd',rawData,"rf", image);
+          let data = await candidates.findByIdAndUpdate(id, candidateData);
+          let resMessage = 'data updated'; 
+          if(!data) resMessage = "invalid id"; 
+          console.log(data);
+          res.status(200).json({data : resMessage});
+          
     }catch(err){
         console.log(err);
         next(err);
@@ -118,6 +120,9 @@ async function deletingCandidate(req, res, next)
     try{
         let id = req.params.id;
         console.log(id);
+        let isCandidate = await candidates.findOne({_id : id});
+        console.log('checking candidate : ', isCandidate);
+        if(!isCandidate) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let data = await candidates.findByIdAndDelete(id);
         let resMessage = 'data deleted'; 
         if(!data) resMessage = "invalid id"; 

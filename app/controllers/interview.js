@@ -55,6 +55,9 @@ async function updateInterview(req, res, next)
     {
         let id = req.params.id;
         let rawData = req.body;
+        let isInterview = await interviews.findOne({_id : id});
+        console.log('checking candidate : ', isInterview);
+        if(!isInterview) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let data = await interviews.findByIdAndUpdate(id, rawData);
         res.status(200).json({message : "data updated"});
     }
@@ -72,6 +75,9 @@ async function deleteInterview(req, res, next)
     {
         let id = req.params.id;
         console.log('id',id);
+        let isInterview = await interviews.findOne({_id : id});
+        console.log('checking candidate : ', isInterview);
+        if(!isInterview) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let data = await interviews.findByIdAndDelete(id);
         res.status(200).json({message : "data deleted"});
     }

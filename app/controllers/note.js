@@ -54,6 +54,9 @@ async function updateNote(req, res, next)
     try{
         let id = req.params.id;
         let rawData = req.body;
+        let isNote = await notes.findOne({_id : id});
+        console.log('checking candidate : ', isNote);
+        if(!isNote) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let data = await notes.findByIdAndUpdate(id, rawData);
         res.status(200).json({message : "data updated"});
 
@@ -68,6 +71,9 @@ async function deleteNote(req, res, next)
     try{
         let id = req.params.id;
         console.log('id',id);
+        let isNote = await notes.findOne({_id : id});
+        console.log('checking candidate : ', isNote);
+        if(!isNote) return res.status(400).json({status : "error" , message : "invalid or repeated"})
         let data = await notes.findByIdAndDelete(id);
         res.status(200).json({message : "data deleted"});
     }

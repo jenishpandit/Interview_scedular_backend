@@ -13,6 +13,8 @@ import globalError from './app/middlewares/globalError.js';
 import AppError from './utils/AppError.js'
 import noteRouter from './app/routes/noteApi.js';
 import interviewRouter from './app/routes/interviewApi.js'
+import swaggerDocument from 'swagger';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
