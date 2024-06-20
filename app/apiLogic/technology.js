@@ -11,7 +11,7 @@ async function createTechnology(req, res, next)
         res.status(200).json({message : "data inserted"});
     }
     catch(err){
-        // console.log("Error : ", err)     
+        console.log("Error : ", err)     
         next(err)
     }
 }
@@ -24,8 +24,8 @@ async function readtechnologies(req, res, next)
         res.status(200).json({data : data});
 
     }catch(err){
-        console.log(err);
-        res.status(400).json({message : err});
+        console.log("Error : ", err)     
+        next(err)
     }
 }
 
@@ -40,13 +40,8 @@ async function readtechnology(req, res, next)
         console.log(data);
         res.status(200).json({data : resMessage});
     }catch(err){
-        console.log('ERROR', err.message);
-        let errMessage = 'internal server error';
-        if (err.kind === "ObjectId") 
-        {
-            errMessage = 'Invalid ID';
-        }
-        res.status(400).json({message : errMessage});
+        console.log("Error : ", err)     
+        next(err)
     }
 }
 
@@ -60,13 +55,8 @@ async function updatingTechnology(req, res, next)
         res.status(200).json({message : "data updated"});
 
     }catch(err){
-        console.log(err);
-        let errMessage = 'internal server error';
-        if (err.kind === "ObjectId") 
-        {
-            errMessage = 'Invalid ID';
-        }
-        res.status(400).json({message : errMessage});
+        console.log("Error : ", err)     
+        next(err)
     }
 }
 
@@ -86,13 +76,8 @@ async function deletingTechnology(req, res, next)
             res.status(200).json({message : message});
     }
     catch(err){
-        console.log(err);
-        let errMessage = 'internal server error';
-        if (err.kind === "ObjectId") 
-            {
-                errMessage = 'Invalid ID';
-            }
-        res.status(400).json({message : errMessage});
+        console.log("Error : ", err)     
+        next(err)
     }
 }
 

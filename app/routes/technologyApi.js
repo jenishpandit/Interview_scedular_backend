@@ -6,27 +6,15 @@ const techRouter = express.Router();
 techRouter.post('/technology', createTechnology)
 
 //reading all
-techRouter.get('/technologies', async (req, res) => {
-    readtechnologies(req, res);
-    console.log('all data showed successfully');
-})
+techRouter.get('/technologies', readtechnologies)
 
 //reading by id
-techRouter.get('/technology/:id', async (req, res) => {
-    readtechnology(req, res);
-    console.log('data showed by id successfully');
-})
+techRouter.get('/technology/:id', readtechnology)
 
 //updating 
-techRouter.put('/technology/:id', async (req, res) => {
-    updatingTechnology(req, res);
-    console.log('data updated by id successfully');
-})
+techRouter.put('/technology/:id', updatingTechnology)
 
 //deleting
-techRouter.delete('/technology/:id', async (req, res) => {
-    deletingTechnology(req, res);
-    console.log('data deleted by id successfully');
-})
+techRouter.delete('/technology/:id', deletingTechnology)
 
 export default techRouter;
