@@ -3,18 +3,18 @@ import {createInterview, readInterviews, readInterview, updateInterview, deleteI
 const interviewRouter = express.Router();
 
 //creating interview
-interviewRouter.post('/interview', createInterview);
+interviewRouter.post('/', createInterview);
 
 // reading all interviews
-interviewRouter.get('/interviews', readInterviews);
+interviewRouter.get('/', readInterviews);
 
 //reading interview by id
-interviewRouter.get('/interview/:id', readInterview);
+interviewRouter.get('/:id', readInterview);
 
 //updating interview by id
-interviewRouter.put('/interview/:id', updateInterview);
+interviewRouter.put('/:id', updateInterview);
 
 //deleting interview by id
-interviewRouter.delete('/interview/:id', deleteInterview);
+interviewRouter.delete('/:id', deleteInterview);
 
 export default interviewRouter;

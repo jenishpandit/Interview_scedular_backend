@@ -5,18 +5,18 @@ import {createNote, readNotes, readNote, updateNote, deleteNote} from '../contro
 const noteRouter = express.Router();
 
 //creating notes
-noteRouter.post('/note', createNote);
+noteRouter.post('/', createNote);
 
 //reading all notes
-noteRouter.get('/notes', readNotes);
+noteRouter.get('/', readNotes);
 
 //reading notes by id
-noteRouter.get('/note/:id', readNote);
+noteRouter.get('/:id', readNote);
 
 //updating note by id
-noteRouter.put('/note/:id', updateNote);
+noteRouter.put('/:id', updateNote);
 
 //deleting note by id
-noteRouter.delete('/note/:id', deleteNote);
+noteRouter.delete('/:id', deleteNote);
 
 export default noteRouter;

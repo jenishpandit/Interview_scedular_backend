@@ -3,18 +3,18 @@ import {createTechnology, readtechnologies, readtechnology, updatingTechnology, 
 const techRouter = express.Router();
 
 //creating technology
-techRouter.post('/technology', createTechnology)
+techRouter.post('/', createTechnology)
 
 //reading all
-techRouter.get('/technologies', readtechnologies)
+techRouter.get('/', readtechnologies)
 
 //reading by id
-techRouter.get('/technology/:id', readtechnology)
+techRouter.get('/:id', readtechnology)
 
 //updating 
-techRouter.put('/technology/:id', updatingTechnology)
+techRouter.put('/:id', updatingTechnology)
 
 //deleting
-techRouter.delete('/technology/:id', deletingTechnology)
+techRouter.delete('/:id', deletingTechnology)
 
 export default techRouter;

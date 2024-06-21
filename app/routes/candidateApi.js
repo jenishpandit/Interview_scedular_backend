@@ -4,22 +4,22 @@ const candidateRouter = express.Router();
 import imageupload from '../middlewares/multer.js';
 
 //creating candidate
-candidateRouter.post('/candidate',imageupload, createCandidate)
+candidateRouter.post('/',imageupload, createCandidate)
 
 //reading all candidate
-candidateRouter.get('/candidates', async (req, res) => {
+candidateRouter.get('/', async (req, res) => {
     readCandidates(req, res);
     console.log('all data showed successfully');
 })
 
 //reading by id of candidate
-candidateRouter.get('/candidate/:id', readCandidate)
+candidateRouter.get('/:id', readCandidate)
 
 //updating candidate by id
-candidateRouter.put('/candidate/:id', imageupload, updatingCandidate);
+candidateRouter.put('/:id', imageupload, updatingCandidate);
 
 //deleting candidate by id
-candidateRouter.delete('/candidate/:id', async (req, res) => {
+candidateRouter.delete('/:id', async (req, res) => {
     deletingCandidate(req, res);
     console.log('data deleted by id successfully');
 })

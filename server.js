@@ -1,67 +1,69 @@
-//importing main file
 import dotenv from 'dotenv';
-dotenv.config();
-import express from "express";
-import mongoose from "mongoose";
+import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import swaggerUi from 'swagger-ui-express';
 import authRouter from './app/routes/userApi.js';
 import techRouter from './app/routes/technologyApi.js';
 import candidateRouter from './app/routes/candidateApi.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import globalError from './app/middlewares/globalError.js';
-import AppError from './utils/AppError.js'
 import noteRouter from './app/routes/noteApi.js';
-import interviewRouter from './app/routes/interviewApi.js'
-import swaggerDocument from 'swagger';
+import interviewRouter from './app/routes/interviewApi.js';
+import globalError from './app/middlewares/globalError.js';
+import AppError from './utils/AppError.js';
+import { PORT } from './constants/constants.js';
+import connectDB from "./database/connection.js";
+import fs from "fs";
+import yaml from 'js-yaml';
+
+dotenv.config();
+
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = PORT || 3000;
 
-//using middleware
+// Middleware setup
 app.use(express.json());
 app.use(cors());
 
-//=============USER_API==========================
-app.use('/', authRouter);
+// Static files for resume uploads
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-//=========TECHNOLOGIES_API======================
-app.use('/', techRouter);
+// API routes
+app.use('/auth', authRouter);
+app.use('/technology', techRouter);
+app.use('/candidate', candidateRouter);
+app.use('/note', noteRouter);
+app.use('/interview', interviewRouter);
 
-//==========CANDIDATES_API=======================
-app.use('/', candidateRouter);
-app.use('/uploads',express.static(path.join(__dirname,'/uploads'))) // uploading resume
 
-//============NOTES API==========================
-app.use('/', noteRouter);
+const swaggerFile = fs.readFileSync('./swagger.yaml', 'utf8');
+const swaggerDocument = yaml.load(swaggerFile);
 
-//==========INTERVIEW API========================
-app.use('/', interviewRouter);
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Catch-all route for handling 404 errors
 app.all('*', (req, res, next) => {
-    console.log("unauthorised api accessing")
+    console.log("Unauthorized API access attempt");
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-// Global error
-app.use(globalError)
+// Global error handler
+app.use(globalError);
 
-// //conncting to the databases
-mongoose.connect('mongodb://localhost:27017/interview_scheduler')
-.then(() => console.log("connnected to the server successfully"))
-.catch((err) => console.log("not connected to the database", err))
+// Connect to MongoDB and start the server
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
+    } catch (error) {
+        console.error(`Error starting the server: ${error.message}`);
+        process.exit(1);
+    }
+};
 
-//conncting to the databases
-// mongoose.connect('mongodb+srv://nikunj:LO4jkpzvIf8aEQWx@nestbackenddatabase.swu2swj.mongodb.net/?retryWrites=true&w=majority&appName=interview_scheduler')
-// .then(() => console.log("connnected to the server successfully"))
-// .catch((e) => console.log("not connected to the database",e ))
-
-//connnecting to the server
-
-//connnecting to the server
-app.listen(PORT , () =>{
-    console.log(`server created at ${PORT}`)
-})
+startServer();
