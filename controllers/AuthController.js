@@ -32,7 +32,7 @@ export class AuthController {
             const { password, ...rest } = req.body;
             const hashedPassword = await bcrypt.hash(password, 12);
             await User.create({ ...rest, password: hashedPassword });
-            successResponse(res, null, "User registered successfully", 201);
+            successResponse(res, null, "Registration successful", 201);
         } catch (err) {
             errorResponse(res, err.message, 400);
         }

@@ -2,11 +2,11 @@
   "name": "y",
   "version": "1.0.0",
   "description": "Interview Scheduler API",
-  "main": "server.js",
+  "main": "Server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon Server.js",
+    "start": "node Server.js"
   },
   "author": "ace",
   "license": "ISC",
@@ -25,5 +25,8 @@
     "multer": "^1.4.5-lts.1",
     "swagger": "^0.7.5",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "yamljs": "^0.3.0"
   }
 }
