@@ -1,33 +1,40 @@
-import {generateToken} from "../app/middlewares/jwt";
-import User from "../models/User";
+import User from "../models/User.js";
+import bcrypt from 'bcryptjs';
+import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
+import {generateToken} from "../middlewares/AuthMiddleware.js";
 
 export class AuthController {
-    constructor() {
-    }
+    constructor() {}
 
-    async login(req, res, next) {
+    async login(req, res) {
         try {
-            let {email, password} = req.body;
-            let user = await User.findOne({email: email}).select(+password);
-            if (!user) return res.status(400).json({message: "email or password is not correct or null"});
-            let pas = await User.findOne({password: password});
-            if (!pas) return res.status(400).json({message: "email or password is not correct or null"});
-            const payload = {id: user._id, email: user.email};
+            const { email, password } = req.body;
+            const user = await User.findOne({ email }).select('+password');
+            if (!user) return res.status(400).json({ message: "email or password is not correct or null" });
+
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) return res.status(400).json({ message: "email or password is not correct or null" });
+
+            const payload = { id: user._id, email: user.email };
             const token = generateToken(payload);
-            res.json({data: {user, token}});
+
+            const userResponse = user.toObject();
+            delete userResponse.password;
+
+            successResponse(res, { user: userResponse, token }, "Login successful")
         } catch (err) {
-            console.log(err);
-            res.status(400).send(err);
+            errorResponse(res, err.message, 400);
         }
     }
 
-    async register(req, res, next) {
+    async register(req, res) {
         try {
-            await User.create(req.body);
-            res.json("data inserted");
+            const { password, ...rest } = req.body;
+            const hashedPassword = await bcrypt.hash(password, 12);
+            await User.create({ ...rest, password: hashedPassword });
+            successResponse(res, null, "User registered successfully", 201);
         } catch (err) {
-            console.log(err);
-            next(err)
+            errorResponse(res, err.message, 400);
         }
     }
 }

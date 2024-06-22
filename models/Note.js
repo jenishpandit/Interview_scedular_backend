@@ -17,6 +17,12 @@ const noteSchema = new mongoose.Schema(
     }
 );
 
+noteSchema.set('toObject', {
+    transform: function (doc, ret) {
+        delete ret.__v
+    }
+})
+
 const Note = mongoose.model('Note', noteSchema);
 
 export default Note;

@@ -39,5 +39,11 @@ const candidateSchema = new mongoose.Schema(
     }
 );
 
+candidateSchema.set('toObject', {
+    transform: function (doc, ret) {
+        delete ret.__v
+    }
+})
+
 const Candidate = mongoose.model("Candidate", candidateSchema);
 export default Candidate;

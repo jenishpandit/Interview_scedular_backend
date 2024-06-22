@@ -31,5 +31,11 @@ const interviewSchema = new mongoose.Schema(
     }
 );
 
+interviewSchema.set('toObject', {
+    transform: function (doc, ret) {
+        delete ret.__v
+    }
+})
+
 const Interview = mongoose.model('Interview', interviewSchema);
 export default Interview;

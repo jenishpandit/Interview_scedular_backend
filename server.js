@@ -4,21 +4,18 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import swaggerUi from 'swagger-ui-express';
-import authRouter from './app/routes/userApi.js';
 import techRouter from './app/routes/technologyApi.js';
 import candidateRouter from './app/routes/candidateApi.js';
 import noteRouter from './app/routes/noteApi.js';
 import interviewRouter from './app/routes/interviewApi.js';
-import globalError from './app/middlewares/globalError.js';
-import AppError from './utils/AppError.js';
 import { PORT } from './constants/constants.js';
 import connectDB from "./database/connection.js";
 import fs from "fs";
 import yaml from 'js-yaml';
 import chalk from "chalk";
+import authRouter from "./routes/AuthRoute.js"
 
 dotenv.config();
-
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -40,21 +37,13 @@ app.use('/candidate', candidateRouter);
 app.use('/note', noteRouter);
 app.use('/interview', interviewRouter);
 
-// Catch-all route for handling 404 errors
-app.all('*', (req, res, next) => {
-    console.log("Unauthorized API access attempt");
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
-
-// Global error handler
-app.use(globalError);
-
 // Connect to MongoDB and start the server
 const startServer = async () => {
     try {
         await connectDB();
         app.listen(PORT, () => {
             console.log(chalk.greenBright(`Server is Running on Port ${PORT}`));
+            console.log(chalk.greenBright(`Swagger http://localhost:${PORT}/api-docs`));
         });
     } catch (error) {
         console.error(chalk.redBright(`Error Starting The Server: ${error.message}`));

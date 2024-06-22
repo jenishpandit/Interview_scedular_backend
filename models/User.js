@@ -18,5 +18,12 @@ const userSchema = new mongoose.Schema(
     }
 );
 
+userSchema.set('toObject', {
+    transform: function (doc, ret) {
+        delete ret.__v
+    }
+})
+
+
 const User = mongoose.model("User", userSchema);
 export default User;
