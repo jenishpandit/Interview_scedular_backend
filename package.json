@@ -17,16 +17,11 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
-    "joi": "^17.13.1",
-    "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^8.4.1",
     "multer": "^1.4.5-lts.1",
     "swagger": "^0.7.5",
     "swagger-ui-express": "^5.0.1"
-  },
-  "devDependencies": {
-    "yamljs": "^0.3.0"
   }
 }

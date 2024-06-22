@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import techRouter from './app/routes/technologyApi.js';
 import candidateRouter from './app/routes/candidateApi.js';
 import noteRouter from './app/routes/noteApi.js';
 import interviewRouter from './app/routes/interviewApi.js';
@@ -11,6 +10,7 @@ import { PORT } from './constants/constants.js';
 import connectDB from "./database/connection.js";
 import chalk from "chalk";
 import authRouter from "./routes/AuthRoute.js"
+import techRouter from './routes/TechRoute.js';
 import swaggerSetup from "./utils/SwaggerSetup.js";
 
 dotenv.config();
