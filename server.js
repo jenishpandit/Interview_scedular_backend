@@ -15,20 +15,23 @@ import { PORT } from './constants/constants.js';
 import connectDB from "./database/connection.js";
 import fs from "fs";
 import yaml from 'js-yaml';
+import chalk from "chalk";
 
 dotenv.config();
 
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const port = PORT || 3000;
 
-// Middleware setup
 app.use(express.json());
 app.use(cors());
-
-// Static files for resume uploads
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+const swaggerFile = fs.readFileSync('./swagger.yaml', 'utf8');
+const swaggerDocument = yaml.load(swaggerFile);
+
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API routes
 app.use('/auth', authRouter);
@@ -36,13 +39,6 @@ app.use('/technology', techRouter);
 app.use('/candidate', candidateRouter);
 app.use('/note', noteRouter);
 app.use('/interview', interviewRouter);
-
-
-const swaggerFile = fs.readFileSync('./swagger.yaml', 'utf8');
-const swaggerDocument = yaml.load(swaggerFile);
-
-// Serve Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Catch-all route for handling 404 errors
 app.all('*', (req, res, next) => {
@@ -57,11 +53,11 @@ app.use(globalError);
 const startServer = async () => {
     try {
         await connectDB();
-        app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
+        app.listen(PORT, () => {
+            console.log(chalk.greenBright(`Server is Running on Port ${PORT}`));
         });
     } catch (error) {
-        console.error(`Error starting the server: ${error.message}`);
+        console.error(chalk.redBright(`Error Starting The Server: ${error.message}`));
         process.exit(1);
     }
 };

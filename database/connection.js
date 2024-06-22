@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import { MONGO_DB_URL } from "../constants/constants.js";
+import chalk from "chalk";
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(MONGO_DB_URL);
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        await mongoose.connect(MONGO_DB_URL);
+        console.log(chalk.yellowBright(`MongoDB Connected Successfully`));
     } catch (error) {
-        console.error(`Error: ${error.message}`);
+        console.error(chalk.redBright(`MongoDB Error: ${error}`));
         process.exit(1);
     }
 };
