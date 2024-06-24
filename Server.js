@@ -1,20 +1,19 @@
 import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import candidateRouter from './app/routes/candidateApi.js';
-import noteRouter from './app/routes/noteApi.js';
-import interviewRouter from './app/routes/interviewApi.js';
+import authRouter from "./routes/AuthRoute.js"
+import techRouter from './routes/TechRoute.js';
+import candidateRouter from './routes/CandidateRoute.js';
+import noteRouter from './routes/NoteRoute.js';
+import interviewRouter from './routes/InterviewRoute.js';
+import { AppError , errorHandler } from './utils/AppError.js';
 import { PORT } from './constants/constants.js';
 import connectDB from "./database/connection.js";
 import chalk from "chalk";
-import authRouter from "./routes/AuthRoute.js"
-import techRouter from './routes/TechRoute.js';
 import swaggerSetup from "./utils/SwaggerSetup.js";
-
-dotenv.config();
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
@@ -30,6 +29,12 @@ app.use('/technology', techRouter);
 app.use('/candidate', candidateRouter);
 app.use('/note', noteRouter);
 app.use('/interview', interviewRouter);
+
+app.all('*', (req, res, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(errorHandler);
 
 // Connect to MongoDB and start the server
 const startServer = async () => {

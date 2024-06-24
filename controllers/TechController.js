@@ -9,7 +9,7 @@ export class TechController{
         try{
             const rawData = req.body;
             await technologies.create(rawData);
-            successResponse(res ,{code : 200,} ,{message : "data inserted"})
+            successResponse(res , "data inserted")
         }
         catch(err){
             errorResponse(res, err.message, 400);

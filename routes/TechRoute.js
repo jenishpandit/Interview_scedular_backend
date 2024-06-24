@@ -1,7 +1,7 @@
 import express from "express";
 import { TechController } from "../controllers/TechController.js";
 import AsyncHandler from "../middlewares/AsyncHandler.js";
-import {techCreateValidation, techParamsValidation} from "../validations/TechValidaton.js";
+import {techCreateValidation, techParamsValidation} from "../validations/TechValidation.js";
 import {validate} from "../middlewares/Validator.js";
 
 const techRouter = express.Router();
