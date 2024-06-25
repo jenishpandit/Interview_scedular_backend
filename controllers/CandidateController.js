@@ -23,7 +23,7 @@ export class CandidateController {
                 resume: image
             };
             await candidates.create(candidateData);
-            successResponse(res, {code: 200,}, {message: "data inserted"})
+            successResponse(res, "data inserted")
         } catch (err) {
             errorResponse(res, err.message, 400);
         }
@@ -61,7 +61,7 @@ export class CandidateController {
                 ])
             successResponse(res, data)
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             errorResponse(res, err.message, 400);
         }
     }
@@ -101,9 +101,9 @@ export class CandidateController {
             let resMessage = 'data updated';
             if (!data) resMessage = "invalid id";
             console.log(data);
-            successResponse(res,  "data updated")
+            successResponse(res,  resMessage)
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             errorResponse(res, err.message, 400);
         }
     }
@@ -119,9 +119,9 @@ export class CandidateController {
             let resMessage = 'data deleted';
             if (!data) resMessage = "invalid id";
             console.log(data);
-            successResponse(res, {code: 200,}, {message: resMessage})
+            successResponse(res, resMessage)
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             let errMessage = 'internal server error';
             if (err.kind === "ObjectId") {
                 errMessage = 'Invalid ID';

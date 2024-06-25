@@ -19,7 +19,7 @@ export class TechController{
     async readAllTechnology( req, res){
         try{
             const data = await technologies.find({});
-            successResponse(res ,{code : 200,} ,{data : data})
+            successResponse(res ,data)
         }catch(err){
             // console.log("Error : ", err)
             errorResponse(res, err.message, 400);
@@ -33,7 +33,7 @@ export class TechController{
             let resMessage = data;
             if(!data) resMessage = "invalid id";
             console.log(data);
-            successResponse(res ,{code : 200,} ,{data : resMessage})
+            successResponse(res , resMessage)
         }catch(err){
                 // console.log("Error : ", err)
             errorResponse(res, err.message, 400);
@@ -48,7 +48,7 @@ export class TechController{
             console.log('checking candidate : ', isTechnology);
             if(!isTechnology) return res.status(400).json({status : "error" , message : "invalid or repeated"})
             await technologies.findByIdAndUpdate(id, rawData);
-            successResponse(res ,{code : 200,} ,{message : "data updated"})
+            successResponse(res , "data updated")
         }catch(err){
             // console.log("Error : ", err)
             errorResponse(res, err.message, 400);
@@ -69,7 +69,7 @@ export class TechController{
                     await technologies.findByIdAndDelete(id);
                     message = 'data deleted';
             }
-            successResponse(res ,{code : 200,} ,{message : message})
+            successResponse(res , message)
 
         }
         catch(err){
