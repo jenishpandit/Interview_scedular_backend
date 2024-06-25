@@ -1,8 +1,7 @@
 import express from "express";
-import {CandidateController} from "../controllers/CandidateController.js";
+import { CandidateController } from "../controllers/CandidateController.js";
 import AsyncHandler from "../middlewares/AsyncHandler.js";
 import multerHandler from "../middlewares/MulterMiddleware.js";
-// import { techCreateValidation , techParamsValidation } from "../validations/TechValidation.js";
 import {validate} from "../middlewares/Validator.js";
 
 const candidateRouter = express.Router();

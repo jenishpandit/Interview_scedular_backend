@@ -23,8 +23,9 @@ export class AuthController {
 
             successResponse(res, { user: userResponse, token }, "Login successful")
         } catch (err) {
+            console.log('gfdhgfx');
             console.log('err : ', err);
-            errorResponse(err);
+            errorResponse(res, err.message, 400);
         }
     }
 

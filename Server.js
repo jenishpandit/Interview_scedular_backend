@@ -36,8 +36,6 @@ app.all('*', (req, res, next) => {
 
 app.use(errorHandler);
 
-
-
 // Connect to MongoDB and start the server
 const startServer = async () => {
     try {

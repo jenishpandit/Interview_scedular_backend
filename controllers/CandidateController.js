@@ -9,11 +9,11 @@ export class CandidateController {
         try {
             let requestBody = req.body;
             let image = req.file.path;
-            console.log(requestBody);
-            let {first_name, last_name, email, phone_number, technology_id, type} = requestBody;
+
+            let {first_name, last_name, email, phone_number, technology_id, type } = requestBody;
             if (!image) return res.status(400).json({message: "resume is not inserted"});
             let isTech = await technologies.findOne({_id: technology_id});
-            console.log('istech : ', isTech);
+            // console.log('istech : ', isTech);
             if (!isTech) return res.status(400).json({
                 status: "error",
                 message: 'technology_id is incorrect or null'
@@ -22,9 +22,11 @@ export class CandidateController {
                 first_name, last_name, email, phone_number, technology_id, type,
                 resume: image
             };
+            // console.log(candidateData);
             await candidates.create(candidateData);
             successResponse(res, "data inserted")
         } catch (err) {
+            console.log('err : ', err);
             errorResponse(res, err.message, 400);
         }
     }

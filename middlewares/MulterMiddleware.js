@@ -24,14 +24,14 @@ const upload = multer({
 })
 
 const multerHandler = (req, res, next) => {
-    upload(req, res, function (err) {
+    upload.single('resume')(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             errorResponse(res, err.message, 400);
         } else if (err) {
             errorResponse(res, err.message, 400);
+        } else {
+            next(); // Proceed to the next middleware if no errors
         }
-        next();
-    }).single('resume');
+    });
 };
-
 export default multerHandler;
