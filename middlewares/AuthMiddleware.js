@@ -6,7 +6,7 @@ if (!SECRET_KEY) {
     throw new Error("SECRET_KEY is not defined in the environment variables");
 }
 
-const authMiddleware = (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) return next();
 
@@ -24,7 +24,7 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-const generateToken = (payload) => {
+export const generateToken = (payload) => {
     try {
         return jwt.sign(payload, SECRET_KEY, { expiresIn: '30d' });  // 30 days expiration
     } catch (err) {
@@ -32,5 +32,3 @@ const generateToken = (payload) => {
         throw new Error("Token generation failed");
     }
 };
-
-export { authMiddleware, generateToken };

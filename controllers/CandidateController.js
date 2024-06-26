@@ -1,133 +1,125 @@
-import technologies from "../models/Technology.js";
-import candidates from "../models/Candidate.js";
+import Technology from "../models/Technology.js";
+import Candidate from "../models/Candidate.js";
+// IMPORTING RESPONSE HANDLER
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 
 export class CandidateController {
     constructor() {}
 
-    async createCandidate(req, res) {
+    async createCandidate( req, res) {
         try {
-            let requestBody = req.body;
-            let image = req.file.path;
+            const { body } = req;
+            const image = req.file.path;
 
-            let {first_name, last_name, email, phone_number, technology_id, type } = requestBody;
-            if (!image) return res.status(400).json({message: "resume is not inserted"});
-            let isTech = await technologies.findOne({_id: technology_id});
-            // console.log('istech : ', isTech);
-            if (!isTech) return res.status(400).json({
-                status: "error",
-                message: 'technology_id is incorrect or null'
-            });
+            if (!image) return errorResponse(res, 'please enter your resume!', 404);
+            const { first_name, last_name, email, phone_number, technology_id, type } = body;
+
+            const isTech = await Technology.findById(technology_id);
+            if (!isTech) return errorResponse(res, 'Technology not found!', 400);
+
+            const isCandidate = await Candidate.findOne({email});
+            if (isCandidate) return errorResponse(res, " please try unique email address ", 400);
+
             let candidateData = {
                 first_name, last_name, email, phone_number, technology_id, type,
                 resume: image
             };
-            // console.log(candidateData);
-            await candidates.create(candidateData);
-            successResponse(res, "data inserted")
+
+            await Candidate.create(candidateData);
+            successResponse(res, candidateData, "data inserted")
+
         } catch (err) {
-            console.log('err : ', err);
+            console.log(' CREATE CANDIDATE err : ', err);
             errorResponse(res, err.message, 400);
         }
     }
 
-    async readAllCandidate(req, res) {
+    async getCandidates(req, res) {
         try {
-            // let data = await candidates.find({});
-            let data = await candidates.aggregate(
-                [
-                    {
-                        $lookup:
-                            {
-                                from: "technologies",
-                                localField: "technology_id",
-                                foreignField: "_id",
-                                as: "tech"
-                            }
-                    },
-                    {
-                        $addFields:
-                            {
-                                candidate_technology:
-                                    {
-                                        "$arrayElemAt": ["$tech.technology_name", 0]
-                                    }
-                            }
-                    },
-                    {
-                        $project:
-                            {
-                                tech: 0
-                            }
-                    }
-                ])
-            successResponse(res, data)
+            const data = await Candidate.find().populate({
+                path: 'technology_id',
+                select: 'technology_name',
+            });
+
+            const newData = data.map((item) => {
+                const newObject = item.toObject();
+                const technology = newObject.technology_id;
+                delete newObject.technology_id;
+                return  {
+                    ...newObject,
+                    technology
+                }
+            })
+
+            successResponse(res, newData)
+
         } catch (err) {
-            // console.log(err);
+            console.log('GET ALL CANDIDATE ERROR: ', err);
             errorResponse(res, err.message, 400);
         }
     }
 
-    async readCandidate(req, res) {
+    async getCandidate(req, res) {
         try {
-            let rawData = req.params.id;
-            console.log(rawData)
-            let data = await candidates.findOne({_id: rawData});
-            let resMessage = data;
-            if (!data) resMessage = "invalid id";
-            // console.log(data);
-            successResponse(res,  resMessage)
+            const {id}  = req.params;
+
+            const data = await Candidate.findById(id).populate({
+                path: 'technology_id',
+                select: 'technology_name'
+            });
+            if (!data) return errorResponse(res, 'Technology not found!', 400);
+
+            let newObject = data.toObject();
+            const technology = newObject.technology_id;
+            delete newObject.technology_id;
+            const newData =  {
+                ...newObject,
+                technology
+            }
+
+            successResponse(res,  newData);
+
         } catch (err) {
-            // console.log('ERRoR', err.message);
+            console.log('READ CANDIDATE ERROR: ', err);
             errorResponse(res, err.message, 400);
         }
     }
 
     async updateCandidate(req, res) {
         try {
-            let id = req.params.id;
-            let rawData = req.body;
-            let image = req.file;
-            let isCandidate = await candidates.findOne({_id: id});
-            console.log('checking candidate : ', isCandidate);
-            if (!isCandidate) return res.status(400).json({status: "error", message: "invalid or repeated"})
-            let candidateData = {...rawData};
-            if (image) {
-                image = req.file.path;
-                candidateData.resume = image;
-            }
-            // console.log('rd', rawData, "rf", image);
+            const {id} = req.params;
+            const {body} = req;
+            const image = req.file ? req.file.path : null;
 
-            // console.log("=============req========", req);
-            let data = await candidates.findByIdAndUpdate(id, candidateData);
-            let resMessage = 'data updated';
-            if (!data) resMessage = "invalid id";
-            console.log(data);
-            successResponse(res,  resMessage)
+            const isCandidate = await Candidate.findById(id);
+            if (!isCandidate) return errorResponse(res, 'Candidate not found!', 404);
+
+            let candidateData = {...body};
+            if (image)   candidateData.resume = image;
+
+            await Candidate.findByIdAndUpdate(id, candidateData);
+            let data = await Candidate.findOne({_id : id});
+
+            successResponse(res,  data,"candidates data updated")
+
         } catch (err) {
-            // console.log(err);
+            console.log('CANDIDATE UPDATE error : ', err);
             errorResponse(res, err.message, 400);
         }
     }
 
     async deleteCandidate(req, res) {
         try {
-            let id = req.params.id;
-            console.log(id);
-            let isCandidate = await candidates.findOne({_id: id});
-            console.log('checking candidate : ', isCandidate);
-            if (!isCandidate) return res.status(400).json({status: "error", message: "invalid or repeated"})
-            let data = await candidates.findByIdAndDelete(id);
-            let resMessage = 'data deleted';
-            if (!data) resMessage = "invalid id";
-            console.log(data);
-            successResponse(res, resMessage)
+            const id = req.params.id;
+            const isCandidate = await Candidate.findOne({_id: id});
+
+            if (!isCandidate) return errorResponse(res, 'invalid ID', 400);
+
+            await Candidate.findByIdAndDelete(id);
+            successResponse(res, "candidates data deleted successfully");
+
         } catch (err) {
-            // console.log(err);
-            let errMessage = 'internal server error';
-            if (err.kind === "ObjectId") {
-                errMessage = 'Invalid ID';
-            }
+            console.log(' DELETED CANDIDATE ERROR : ', err);
             errorResponse(res, err.message, 400);
         }
     }

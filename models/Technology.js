@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// creating mongoose schema for technologies
 const technologySchema = new mongoose.Schema(
     {
         technology_name: {

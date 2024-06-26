@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// creating mongoose schema for notes
 const noteSchema = new mongoose.Schema(
     {
         interview_id: {

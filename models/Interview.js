@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// creating mongoose schema for interview
 const interviewSchema = new mongoose.Schema(
     {
         candidate_id: {

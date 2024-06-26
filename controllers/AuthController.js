@@ -3,9 +3,11 @@ import bcrypt from 'bcryptjs';
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 import {generateToken} from "../middlewares/AuthMiddleware.js";
 
+// API controller
 export class AuthController {
     constructor() {}
 
+    // LOGIN USER
     async login(req, res) {
         try {
             const { email, password } = req.body;
@@ -22,19 +24,21 @@ export class AuthController {
             delete userResponse.password;
 
             successResponse(res, { user: userResponse, token }, "Login successful")
+
         } catch (err) {
-            console.log('gfdhgfx');
             console.log('err : ', err);
             errorResponse(res, err.message, 400);
         }
     }
-
+    // CREATE USER
     async register(req, res) {
         try {
             const { password, ...rest } = req.body;
             const hashedPassword = await bcrypt.hash(password, 12);
+
             await User.create({ ...rest, password: hashedPassword });
             successResponse(res, null, "Registration successful", 201);
+
         } catch (err) {
             errorResponse(res, err.message, 400);
         }

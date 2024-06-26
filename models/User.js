@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// creating mongoose schema for user
 const userSchema = new mongoose.Schema(
     {
         email: {
@@ -23,7 +24,6 @@ userSchema.set('toObject', {
         delete ret.__v
     }
 })
-
 
 const User = mongoose.model("User", userSchema);
 export default User;

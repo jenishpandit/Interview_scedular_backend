@@ -1,4 +1,5 @@
-class AppError extends Error {
+//this is unAuthorised route error handler
+export class AppError extends Error {
     constructor(message, statusCode) {
       super(message);
   
@@ -9,7 +10,9 @@ class AppError extends Error {
       Error.captureStackTrace(this, this.constructor);
     }
   }
-  const errorHandler = (err, req, res, next) => {
+
+  // this is error handler
+  export const errorHandler = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
@@ -19,4 +22,3 @@ class AppError extends Error {
     });
 };
 
-export { AppError , errorHandler };

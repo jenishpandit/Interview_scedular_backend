@@ -1,79 +1,82 @@
-import technologies from "../models/Technology.js";
+import Technology from "../models/Technology.js";
 import candidates from "../models/Candidate.js";
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 
-export class TechController{
-    constructor() {}
+export class TechController {
+    constructor() {
+    }
 
-    async createTechnology( req, res){
-        try{
-            const rawData = req.body;
-            await technologies.create(rawData);
-            successResponse(res , "data inserted")
-        }
-        catch(err){
+    async createTechnology(req, res) {
+        try {
+            const {body} = req;
+
+            let isTech = await Technology.findOne({technology_name : body.technology_name});
+            if(isTech) return errorResponse(res, 'Technology name must be unique', 400);
+
+            const data = await Technology.create(body);
+            successResponse(res, data, "Technology Created Successfully.", 201)
+        } catch (err) {
+            console.log("CREATE TECHNOLOGY Error: ", err)
             errorResponse(res, err.message, 400);
         }
     }
 
-    async readAllTechnology( req, res){
-        try{
-            const data = await technologies.find({});
-            successResponse(res ,data)
-        }catch(err){
-            // console.log("Error : ", err)
+    async getTechnologies(req, res) {
+        try {
+            const data = await Technology.find();
+            successResponse(res, data)
+        } catch (err) {
+            console.log("GET ALL TECHNOLOGIES Error: ", err)
             errorResponse(res, err.message, 400);
         }
     }
 
-    async readTechnology( req, res) {
-        try{
-            const rawData = req.params.id;
-            const data = await technologies.findOne({_id : rawData});
-            let resMessage = data;
-            if(!data) resMessage = "invalid id";
-            console.log(data);
-            successResponse(res , resMessage)
-        }catch(err){
-                // console.log("Error : ", err)
-            errorResponse(res, err.message, 400);
-            }
-        }
+    async getTechnology(req, res) {
+        try {
+            const {id} = req.params;
 
-    async updateTechnolgy( req, res) {
-        try{
-            const id = req.params.id;
-            const rawData = req.body;
-            const isTechnology = await technologies.findOne({_id : id});
-            console.log('checking candidate : ', isTechnology);
-            if(!isTechnology) return res.status(400).json({status : "error" , message : "invalid or repeated"})
-            await technologies.findByIdAndUpdate(id, rawData);
-            successResponse(res , "data updated")
-        }catch(err){
-            // console.log("Error : ", err)
+            const data = await Technology.findById(id);
+            if (!data) return errorResponse(res, "Technology not found!", 404);
+
+            successResponse(res, data)
+        } catch (err) {
+            console.log("GET TECHNOLOGY Error: ", err)
             errorResponse(res, err.message, 400);
         }
     }
 
-    async deleteTechnology( req, res) {
-        try{
-            const id = req.params.id;
-            console.log('id',id);
-            const isTechnology = await technologies.findOne({_id : id});
-            console.log('checking candidate : ', isTechnology);
-            if(!isTechnology) return res.status(400).json({status : "error" , message : "invalid or repeated"})
-            const isTech = await candidates.findOne({technology_id : id});
-            let message = 'data not deleted'
-            if(!isTech)
-            {
-                    await technologies.findByIdAndDelete(id);
-                    message = 'data deleted';
-            }
-            successResponse(res , message)
+    async updateTechnology(req, res) {
+        try {
+            const {id} = req.params;
+            const {body} = req;
 
+            const isTechnology = await Technology.findById(id);
+            if (!isTechnology) return errorResponse(res, "Technology not found!", 404);
+
+            await Technology.findByIdAndUpdate(id, body);
+            let data = await Technology.findById(id)
+            successResponse(res, data,"Technology Updated Successfully.")
+        } catch (err) {
+            console.log("UPDATE TECHNOLOGY Error: ", err)
+            errorResponse(res, err.message, 400);
         }
-        catch(err){
-            console.log("Error : ", err)
+    }
+
+    async deleteTechnology(req, res) {
+        try {
+            const { id } = req.params;
+
+            const isTechnology = await Technology.findById(id);
+            if (!isTechnology) return errorResponse(res, "Technology not found!", 404);
+
+            const isTech = await candidates.findOne({technology_id: id});
+            if (isTech) return errorResponse(res, "Technology is in use in Candidate document !", 400);
+
+            await Technology.findByIdAndDelete(id);
+            successResponse(res, null, "Technology Deleted Successfully.", 204)
+
+        } catch (err) {
+            console.log("DELETE TECHNOLOGY Error: ", err)
             errorResponse(res, err.message, 400);
         }
     }
