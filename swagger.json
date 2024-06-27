@@ -105,7 +105,7 @@
         }
       }
     },
-    "/candidate/create": {
+    "/candidate": {
       "post": {
         "tags": ["Candidate"],
         "summary": "Create Candidate",
@@ -114,7 +114,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateCandidateBody"
+                "$ref": "#/components/schemas/CandidateBody"
               }
             }
           }
@@ -144,9 +144,7 @@
             }
           }
         }
-      }
-    },
-    "/candidate/all": {
+      },
       "get": {
         "tags": ["Candidate"],
         "summary": "Get all Candidates",
@@ -184,6 +182,17 @@
       "get": {
         "tags": ["Candidate"],
         "summary": "Get Candidate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Candidate ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success.",
@@ -202,6 +211,699 @@
                     },
                     "data": {
                       "$ref": "#/components/schemas/CandidateResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags": ["Candidate"],
+        "summary": "Update Candidate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Candidate ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "requestBody" : {
+          "required" : true,
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/CandidateBody"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Candidate Updated Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Candidate Updated Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/CandidateResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    },
+      "delete" : {
+        "tags": ["Candidate"],
+        "summary": "Delete Candidate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Candidate ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Candidate Deleted Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Candidate Deleted Successfully."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+},
+    "/technology": {
+      "post": {
+        "tags": ["Technology"],
+        "summary": "Create technology",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TechnologyBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Candidate Created Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/CandidateResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Technology"],
+        "summary": "Get all technologies",
+        "responses": {
+          "200": {
+            "description": "All Technology data showed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "All Technology data showed successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TechnologyResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/technology/{id}": {
+      "get": {
+        "tags": ["Technology"],
+        "summary": "Get Technology",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Technology ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Technology data showed by ID Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Technology data showed by ID Successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/TechnologyResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags": ["Technology"],
+        "summary": "Update Technology",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Technology ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "requestBody" : {
+          "required" : true,
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/TechnologyBody"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Technology Updated Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Technology Updated Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/TechnologyResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags": ["Technology"],
+        "summary": "Delete Technology",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Technology ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Technology Deleted Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Technology Deleted Successfully."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview": {
+      "post": {
+        "tags": ["Interview"],
+        "summary": "Create Interview",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Interview data Created Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Interview Created Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InterviewResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Interview"],
+        "summary": "Get all Interviews",
+        "responses": {
+          "200": {
+            "description": "All Interview data showed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "All Interview data showed successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/InterviewResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/interview/{id}": {
+      "get": {
+        "tags": ["Interview"],
+        "summary": "Get Interview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Interview ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Interview data showed by ID Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Interview data showed by ID Successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InterviewResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags": ["Interview"],
+        "summary": "Update Interview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Interview ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "requestBody" : {
+          "required" : true,
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/InterviewBody"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Interview Updated Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Interview Updated Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/InterviewResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags": ["Interview"],
+        "summary": "Delete Interview",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Interview ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Interview Deleted Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Interview Deleted Successfully."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/note": {
+      "post": {
+        "tags": ["Note"],
+        "summary": "Create Note",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Interview data Created Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Note Created Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/NoteResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Note"],
+        "summary": "Get all Note",
+        "responses": {
+          "200": {
+            "description": "All Note data showed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "All Note data showed successfully"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NoteResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/note/{id}": {
+      "get": {
+        "tags": ["Note"],
+        "summary": "Get Note",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Note ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Note data showed by ID Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Note data showed by ID Successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/NoteResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags": ["Note"],
+        "summary": "Update Note",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Note ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "requestBody" : {
+          "required" : true,
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/NoteBody"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Note Updated Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Note Updated Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/NoteResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags": ["Note"],
+        "summary": "Delete Note",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Note ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Note Deleted Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Note Deleted Successfully."
                     }
                   }
                 }
@@ -235,17 +937,71 @@
           }
         }
       },
-      "CreateCandidateBody": {
+      "CandidateBody": {
         "type": "object",
         "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "faizan2@gmail.com"
+          "first_name": {
+            "type": "String",
+            "required": true,
+            "example": "Vegeta"
           },
-          "password": {
+          "last_name": {
+            "type": "String",
+            "required": true,
+            "example": "Saiyan"
+          },
+          "email": {
+            "type": "String",
+            "required": true,
+            "unique": true,
+            "example": "example@gmail.com"
+          },
+          "phone_number": {
+            "type": "String",
+            "required": true,
+            "example": "12345"
+          },
+          "technology_id": {
             "type": "string",
-            "example": "password123"
+            "required": true,
+            "example": "ObjectId"
+          },
+          "type": {
+            "type": "String",
+            "required": true,
+            "example": "WFH"
+          },
+          "resume": {
+            "type": "String",
+            "required": true,
+            "example": "image"
+          }
+        }
+      },
+      "TechnologyBody": {
+        "type": "object",
+        "properties": {
+          "technology_name": {
+            "type": "string",
+            "example": "C++"
+          }
+        }
+      },
+      "InterviewBody": {
+        "type": "object",
+        "properties": {
+          "technology_name": {
+            "type": "string",
+            "example": "C++"
+          }
+        }
+      },
+      "NoteBody": {
+        "type": "object",
+        "properties": {
+          "note_text": {
+            "type": "string",
+            "example": "This is sample note"
           }
         }
       },
@@ -277,11 +1033,11 @@
         "properties": {
           "first_name": {
             "type": "string",
-            "example": "First name"
+            "example": "Goku"
           },
           "last_name": {
             "type": "string",
-            "example": "Last name"
+            "example": "Saiyan"
           },
           "email": {
             "type": "string",
@@ -302,6 +1058,46 @@
           "resume": {
             "type": "string",
             "example": "Resume File"
+          }
+        }
+      },
+      "TechnologyResponse": {
+        "type": "object",
+        "properties": {
+          "technology_name": {
+            "type": "string",
+            "example": "C++"
+          }
+        }
+      },
+      "InterviewResponse": {
+        "candidate_id": {
+          "type": "objectId",
+          "example" : "66719260e281ef29a9375f9b"
+        },
+        "created_by": {
+          "type": "objectId",
+          "example" : "667129fc98c7c4dd7e2956b4"
+        },
+        "interview_date": {
+          "type": "Date",
+          "example" : "10-10-10"
+        },
+        "interview_type": {
+          "type": "String",
+          "example" : "Online"
+        },
+        "location": {
+          "type": "String",
+          "example" : "Surat"
+        }
+      },
+      "NoteResponse": {
+        "type": "object",
+        "properties": {
+          "technology_name": {
+            "type": "string",
+            "example": "This is sample note"
           }
         }
       }

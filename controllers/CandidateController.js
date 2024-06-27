@@ -18,7 +18,7 @@ export class CandidateController {
             if (!isTech) return errorResponse(res, 'Technology not found!', 400);
 
             const isCandidate = await Candidate.findOne({email});
-            if (isCandidate) return errorResponse(res, " please try unique email address ", 400);
+            if (isCandidate) return errorResponse(res, "Please try unique email address!", 400);
 
             let candidateData = {
                 first_name, last_name, email, phone_number, technology_id, type,
@@ -26,7 +26,7 @@ export class CandidateController {
             };
 
             await Candidate.create(candidateData);
-            successResponse(res, candidateData, "data inserted")
+            successResponse(res, candidateData, "Candidate Created Successfully.")
 
         } catch (err) {
             console.log(' CREATE CANDIDATE err : ', err);
@@ -52,7 +52,7 @@ export class CandidateController {
             })
 
             successResponse(res, newData)
-
+Z
         } catch (err) {
             console.log('GET ALL CANDIDATE ERROR: ', err);
             errorResponse(res, err.message, 400);

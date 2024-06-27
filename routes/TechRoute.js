@@ -10,10 +10,10 @@ const techRouter = express.Router();
 const techController = new TechController();
 
 // api routes
-techRouter.post('/create', techValidation, validate, AsyncHandler(techController.createTechnology.bind(techController)))
-techRouter.get('/all',  AsyncHandler(techController.getTechnologies.bind(techController)))
+techRouter.post('/', techValidation, validate, AsyncHandler(techController.createTechnology.bind(techController)))
+techRouter.get('/',  AsyncHandler(techController.getTechnologies.bind(techController)))
 techRouter.get('/:id', techParamsValidation, validate, AsyncHandler(techController.getTechnology.bind(techController)))
-techRouter.put('/update/:id', techParamsValidation, techValidation, validate, AsyncHandler(techController.updateTechnology.bind(techController)))
-techRouter.delete('/delete/:id', techParamsValidation, validate, AsyncHandler(techController.deleteTechnology.bind(techController)))
+techRouter.put('/:id', techParamsValidation, techValidation, validate, AsyncHandler(techController.updateTechnology.bind(techController)))
+techRouter.delete('/:id', techParamsValidation, validate, AsyncHandler(techController.deleteTechnology.bind(techController)))
 
 export default techRouter;

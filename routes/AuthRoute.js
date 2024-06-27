@@ -1,8 +1,6 @@
 import express from "express";
-// importing controllers
 import { AuthController } from "../controllers/AuthController.js";
 import AsyncHandler from "../middlewares/AsyncHandler.js";
-//importing validators
 import {loginValidation, registerValidation} from "../validations/AuthValidation.js";
 import {validate} from "../middlewares/Validator.js";
 

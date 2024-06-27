@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import {SECRET_KEY} from "../constants/constants.js";
+import {errorResponse} from "../utils/ResponseHandler.js";
 
 
 if (!SECRET_KEY) {
@@ -8,19 +9,19 @@ if (!SECRET_KEY) {
 
 export const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
-    if (!authHeader) return next();
+    if (!authHeader) return errorResponse(res, "Unauthorised User", 401)
 
     const token = authHeader.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ error: "Unauthorized: No token provided" });
+        return errorResponse(res, "Unauthorised User", 401)
     }
 
     try {
         req.user = jwt.verify(token, SECRET_KEY);
         next();
     } catch (err) {
-        console.error(err);
-        res.status(401).json({ error: "Unauthorized: Invalid token" });
+        console.error("UNAUTHORISED ERROR: ", err);
+        errorResponse(res, "Unauthorised User", 401)
     }
 };
 

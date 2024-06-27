@@ -50,8 +50,8 @@ export class TechController {
             const {id} = req.params;
             const {body} = req;
 
-            const isTechnology = await Technology.findById(id);
-            if (!isTechnology) return errorResponse(res, "Technology not found!", 404);
+            const isTechnology = await Technology.findOne({technology_name : "body.technology_name"});
+            if (!isTechnology) return errorResponse(res, "Technology is in already use!", 404);
 
             await Technology.findByIdAndUpdate(id, body);
             let data = await Technology.findById(id)

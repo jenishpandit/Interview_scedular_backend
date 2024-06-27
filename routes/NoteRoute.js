@@ -10,10 +10,10 @@ const noteRouter = express.Router();
 const noteController = new NoteController();
 
 // api routes
-noteRouter.post('/create',noteValidate, validate, AsyncHandler(noteController.createNote.bind(noteController)));
-noteRouter.get('/all',AsyncHandler(noteController.getNotes.bind(noteController)));
+noteRouter.post('/',noteValidate, validate, AsyncHandler(noteController.createNote.bind(noteController)));
+noteRouter.get('/',AsyncHandler(noteController.getNotes.bind(noteController)));
 noteRouter.get('/:id', noteIDValidate, validate, AsyncHandler(noteController.getNote.bind(noteController)));
-noteRouter.put('/update/:id',noteIDValidate,noteValidate, validate, AsyncHandler(noteController.updateNote.bind(noteController)));
-noteRouter.delete('/delete/:id', noteIDValidate, validate, AsyncHandler(noteController.deleteNote.bind(noteController)));
+noteRouter.put('/:id',noteIDValidate,noteValidate, validate, AsyncHandler(noteController.updateNote.bind(noteController)));
+noteRouter.delete('/:id', noteIDValidate, validate, AsyncHandler(noteController.deleteNote.bind(noteController)));
 
 export default noteRouter;
