@@ -51,7 +51,7 @@ export class CandidateController {
                 }
             })
 
-            successResponse(res, newData)
+            successResponse(res, newData, "All Candidates Showed Successfully")
 Z
         } catch (err) {
             console.log('GET ALL CANDIDATE ERROR: ', err);
@@ -77,7 +77,7 @@ Z
                 technology
             }
 
-            successResponse(res,  newData);
+            successResponse(res,  newData, "Candidate Data Showed by ID Successfully");
 
         } catch (err) {
             console.log('READ CANDIDATE ERROR: ', err);
@@ -100,7 +100,7 @@ Z
             await Candidate.findByIdAndUpdate(id, candidateData);
             let data = await Candidate.findOne({_id : id});
 
-            successResponse(res,  data,"candidates data updated")
+            successResponse(res,  data,"Candidates Data Updated Successfully")
 
         } catch (err) {
             console.log('CANDIDATE UPDATE error : ', err);
@@ -110,14 +110,13 @@ Z
 
     async deleteCandidate(req, res) {
         try {
-            const id = req.params.id;
-            const isCandidate = await Candidate.findOne({_id: id});
+            const {id} = req.params;
+            const isCandidate = await Candidate.findById(id);
 
             if (!isCandidate) return errorResponse(res, 'invalid ID', 400);
 
             await Candidate.findByIdAndDelete(id);
-            successResponse(res, "candidates data deleted successfully");
-
+            successResponse(res,null, "candidates data deleted successfully");
         } catch (err) {
             console.log(' DELETED CANDIDATE ERROR : ', err);
             errorResponse(res, err.message, 400);

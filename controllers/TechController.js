@@ -24,7 +24,7 @@ export class TechController {
     async getTechnologies(req, res) {
         try {
             const data = await Technology.find();
-            successResponse(res, data)
+            successResponse(res, data, "All Technology Showed Successfully")
         } catch (err) {
             console.log("GET ALL TECHNOLOGIES Error: ", err)
             errorResponse(res, err.message, 400);
@@ -38,7 +38,7 @@ export class TechController {
             const data = await Technology.findById(id);
             if (!data) return errorResponse(res, "Technology not found!", 404);
 
-            successResponse(res, data)
+            successResponse(res, data, "Technology Data Showed by ID Successfully")
         } catch (err) {
             console.log("GET TECHNOLOGY Error: ", err)
             errorResponse(res, err.message, 400);
@@ -55,7 +55,7 @@ export class TechController {
 
             await Technology.findByIdAndUpdate(id, body);
             let data = await Technology.findById(id)
-            successResponse(res, data,"Technology Updated Successfully.")
+            successResponse(res, data,"Technology Data Updated Successfully.")
         } catch (err) {
             console.log("UPDATE TECHNOLOGY Error: ", err)
             errorResponse(res, err.message, 400);
@@ -73,7 +73,7 @@ export class TechController {
             if (isTech) return errorResponse(res, "Technology is in use in Candidate document !", 400);
 
             await Technology.findByIdAndDelete(id);
-            successResponse(res, null, "Technology Deleted Successfully.", 204)
+            successResponse(res, null,"Technology Deleted Successfully.")
 
         } catch (err) {
             console.log("DELETE TECHNOLOGY Error: ", err)

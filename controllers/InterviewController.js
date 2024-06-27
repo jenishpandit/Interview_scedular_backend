@@ -10,7 +10,7 @@ export class InterviewController {
             const {body} = req;
 
             await interviews.create(body);
-            successResponse(res, body, "interview data inserted successfully");
+            successResponse(res, body, "interview Created successfully");
         } catch (err) {
             console.log('CREATE INTERVIEW ERROR : ', err);
             errorResponse(res, err.message, 400);
@@ -33,7 +33,7 @@ export class InterviewController {
             const data = await interviews.findById(id);
 
             if (!data) return errorResponse(res, 'invalid ID', 400);
-            successResponse(res, data);
+            successResponse(res, data,"Interview Data Showed by ID Successfully");
         } catch (err) {
             console.log('READ INTERVIEW ERROR : ', err);
             errorResponse(res, err.message, 400);
@@ -49,8 +49,8 @@ export class InterviewController {
             if (!isInterview) return errorResponse(res, 'invalid ID', 400);
             await interviews.findByIdAndUpdate(id, body);
 
-            await interviews.findByIdAndUpdate(id, body);
-            successResponse(res, isInterview, "data updated");
+            let resData = await interviews.findById(id);
+            successResponse(res, resData, "Interview Data Updated Successfully");
         } catch (err) {
             console.log('UPDATE INTERVIEW ERROR : ', err);
             errorResponse(res, err.message, 400);
@@ -65,7 +65,7 @@ export class InterviewController {
             if (!isInterview) return errorResponse(res, 'invalid ID', 400);
             await interviews.findByIdAndDelete(id);
 
-            successResponse(res, "data deleted")
+            successResponse(res, null,"interview data deleted successfully")
         } catch (err) {
             console.log('DELETE INTERVIEW ERROR : ', err);
             errorResponse(res, err.message, 400);

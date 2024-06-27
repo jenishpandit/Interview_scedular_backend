@@ -11,7 +11,7 @@ export class NoteController {
             const {body} = req;
             await notes.create(body);
 
-            successResponse(res, body, "New notes data inserted successfully");
+            successResponse(res, body, "Notes Created Successfully.");
 
         } catch (err) {
             console.log('CREATE NOTE ERROR : ', err);
@@ -22,7 +22,7 @@ export class NoteController {
     async getNotes(req, res) {
         try {
             const data = await notes.find({});
-            successResponse(res, data,"All notes data showed successfully");
+            successResponse(res, data,"All Notes Data Showed Successfully");
 
         } catch (err) {
             console.log('GET ALL NOTE ERROR : ', err);
@@ -37,7 +37,7 @@ export class NoteController {
             const data = await notes.findById(id);
 
             if (!data) return errorResponse(res, "invalid ID", 400);
-            successResponse(res, data,"notes data showed by id successfully");
+            successResponse(res, data,"Notes Data Showed by ID Successfully");
 
         } catch (err) {
             console.log('GET NOTE BY ID ERROR : ', err);
@@ -55,7 +55,7 @@ export class NoteController {
 
             await notes.findByIdAndUpdate(id, body);
             const data = await notes.findOne({_id : id})
-            successResponse(res, data,"notes data updated successfully");
+            successResponse(res, data,"Notes Data Updated Successfully");
 
         } catch (err) {
             console.log('UPDATE NOTE ERROR : ', err);
@@ -71,7 +71,7 @@ export class NoteController {
             if (!isNote) return errorResponse(res, 'invalid ID', 400);
 
             await notes.findByIdAndDelete(id);
-            successResponse(res, "notes data deleted successfully");
+            successResponse(res, null,"notes data deleted successfully");
 
         } catch (err) {
             console.log('DELETE NOTE ERROR : ', err);
