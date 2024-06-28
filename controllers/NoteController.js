@@ -11,7 +11,7 @@ export class NoteController {
             const {body} = req;
             await notes.create(body);
 
-            successResponse(res, body, "Notes Created Successfully.");
+            successResponse(res, body, "Notes  Created Successfully.");
 
         } catch (err) {
             console.log('CREATE NOTE ERROR : ', err);

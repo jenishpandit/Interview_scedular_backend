@@ -10,6 +10,7 @@ import techRouter from './routes/TechRoute.js';
 import candidateRouter from './routes/CandidateRoute.js';
 import noteRouter from './routes/NoteRoute.js';
 import interviewRouter from './routes/InterviewRoute.js';
+import DashBoardRouter from "./routes/DashBoardRoute.js";
 import { AppError , errorHandler } from './utils/AppError.js';
 import { PORT } from './constants/constants.js';
 import connectDB from "./database/connection.js";
@@ -30,6 +31,7 @@ app.use('/technology', authMiddleware, techRouter);
 app.use('/candidate', authMiddleware, candidateRouter);
 app.use('/note', authMiddleware,noteRouter);
 app.use('/interview', authMiddleware, interviewRouter);
+app.use('/dashboard', DashBoardRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

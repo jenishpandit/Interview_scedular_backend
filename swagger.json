@@ -912,6 +912,37 @@
           }
         }
       }
+    },
+    "dashboard/total": {
+      "get": {
+        "tags": ["DashBoard"],
+        "summary": "Get Candidates, Technology, Interview" ,
+        "responses": {
+          "200": {
+            "description": " All Total of Candidates, Technology, Interview showed Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": " All Total of Candidates, Technology, Interview Successfully"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/DashBoard"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1098,6 +1129,23 @@
           "technology_name": {
             "type": "string",
             "example": "This is sample note"
+          }
+        }
+      },
+      "DashBoard": {
+        "type": "object",
+        "properties": {
+          "candidateTotal": {
+            "type": "integer",
+            "example": 3
+          },
+          "technologyTotal": {
+            "type": "integer",
+            "example": 4
+          },
+          "interviewTotal": {
+            "type": "integer",
+            "example": 5
           }
         }
       }

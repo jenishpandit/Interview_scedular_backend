@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 // creating mongoose schema for candidate
 const candidateSchema = new mongoose.Schema(
     {

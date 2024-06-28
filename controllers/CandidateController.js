@@ -1,6 +1,5 @@
 import Technology from "../models/Technology.js";
 import Candidate from "../models/Candidate.js";
-// IMPORTING RESPONSE HANDLER
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 
 export class CandidateController {
@@ -51,8 +50,7 @@ export class CandidateController {
                 }
             })
 
-            successResponse(res, newData, "All Candidates Showed Successfully")
-Z
+            successResponse(res, newData, "All Candidates Showed Successfully");
         } catch (err) {
             console.log('GET ALL CANDIDATE ERROR: ', err);
             errorResponse(res, err.message, 400);
@@ -78,7 +76,6 @@ Z
             }
 
             successResponse(res,  newData, "Candidate Data Showed by ID Successfully");
-
         } catch (err) {
             console.log('READ CANDIDATE ERROR: ', err);
             errorResponse(res, err.message, 400);
@@ -100,8 +97,7 @@ Z
             await Candidate.findByIdAndUpdate(id, candidateData);
             let data = await Candidate.findOne({_id : id});
 
-            successResponse(res,  data,"Candidates Data Updated Successfully")
-
+            successResponse(res,  data,"Candidates Data Updated Successfully");
         } catch (err) {
             console.log('CANDIDATE UPDATE error : ', err);
             errorResponse(res, err.message, 400);
