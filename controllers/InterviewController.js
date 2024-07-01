@@ -30,7 +30,9 @@ export class InterviewController {
     async getInterview(req, res) {
         try {
             const {id} = req.params;
-            const data = await interviews.findById(id);
+            const data = await interviews.find({candidate_id:id});
+            console.log(id);
+            console.log("data =",data);
 
             if (!data) return errorResponse(res, 'invalid ID', 400);
             successResponse(res, data,"Interview Data Showed by ID Successfully");
