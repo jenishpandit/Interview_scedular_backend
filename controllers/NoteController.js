@@ -34,7 +34,9 @@ export class NoteController {
         try {
             const {id} = req.params;
 
-            const data = await notes.findById(id);
+            const data = await notes.find({interview_id:id});
+            console.log(id);
+            console.log("data =",data);
 
             if (!data) return errorResponse(res, "invalid ID", 400);
             successResponse(res, data,"Notes Data Showed by ID Successfully");
