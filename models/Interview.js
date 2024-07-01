@@ -5,7 +5,7 @@ const interviewSchema = new mongoose.Schema(
     {
         candidate_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'candidates',
+            ref: 'Candidate',
             required: true
         },
         created_by: {
