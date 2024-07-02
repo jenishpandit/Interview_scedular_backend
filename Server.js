@@ -31,7 +31,7 @@ app.use('/technology', authMiddleware, techRouter);
 app.use('/candidate', authMiddleware, candidateRouter);
 app.use('/note', authMiddleware,noteRouter);
 app.use('/interview', authMiddleware, interviewRouter);
-app.use('/dashboard', DashBoardRouter);
+app.use('/dashboard', authMiddleware, DashBoardRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

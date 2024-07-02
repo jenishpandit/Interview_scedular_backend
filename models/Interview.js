@@ -22,6 +22,11 @@ const interviewSchema = new mongoose.Schema(
             enum: ['Online', 'Offline'],
             required: true
         },
+        round: {
+            type:String,
+            enum: ["technical interview", "HR round", "reschedule"],
+            required: true
+        },
         location: {
             type: String,
             required: true

@@ -29,6 +29,11 @@ const candidateSchema = new mongoose.Schema(
             enum: ['WFH', 'office'],
             required: true
         },
+        gender:{
+            type:String,
+            enum:["male","female","others"],
+            required: true
+        },
         resume: {
             type: String,
             required: true

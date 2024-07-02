@@ -1,7 +1,7 @@
 import Candidate from "../models/Candidate.js";
-import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 import Technology from "../models/Technology.js";
 import Interview from "../models/Interview.js";
+import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 
 export class DashBoardController {
     constructor() {}

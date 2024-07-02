@@ -18,6 +18,7 @@ export class CandidateController {
         phone_number,
         technology_id,
         type,
+        gender
       } = body;
 
       const isTech = await Technology.findById(technology_id);
@@ -34,6 +35,7 @@ export class CandidateController {
         phone_number,
         technology_id,
         type,
+        gender,
         resume: image,
       };
 
