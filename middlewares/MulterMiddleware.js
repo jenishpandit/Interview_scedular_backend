@@ -27,8 +27,10 @@ const multerHandler = (req, res, next) => {
     upload.single('resume')(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             errorResponse(res, err.message, 400);
+            console.log("multerHandler");
         } else if (err) {
             errorResponse(res, err.message, 400);
+            console.log("multerHandlesdewqeqwer");
         } else {
             next(); // Proceed to the next middleware if no errors
         }

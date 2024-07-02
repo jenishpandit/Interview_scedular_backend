@@ -6,8 +6,10 @@ export class CandidateController {
   constructor() {}
 
   async createCandidate(req, res) {
+    console.log("dssdsdsd");
     try {
       const { body } = req;
+      console.log(req);
       const image = req.file.path;
 
       if (!image) return errorResponse(res, "please enter your resume!", 404);
@@ -20,6 +22,7 @@ export class CandidateController {
         type,
         gender
       } = body;
+      console.log(body,"=========");
 
       const isTech = await Technology.findById(technology_id);
       if (!isTech) return errorResponse(res, "Technology not found!", 400);
