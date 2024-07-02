@@ -1002,6 +1002,11 @@
             "required": true,
             "example": "WFH"
           },
+          "gender": {
+            "type": "String",
+            "required": true,
+            "example": "male"
+          },
           "resume": {
             "type": "String",
             "required": true,
@@ -1014,16 +1019,43 @@
         "properties": {
           "technology_name": {
             "type": "string",
-            "example": "C++"
+            "example": "C++",
+            "required": true
           }
         }
       },
       "InterviewBody": {
         "type": "object",
         "properties": {
-          "technology_name": {
+          "candidate_id": {
+            "type": "objectId",
+            "example": "objectId",
+            "required": true
+          },
+          "created_by": {
+            "type": "objectId",
+            "example": "objectId",
+            "required": true
+          },
+          "interview_date": {
+            "type": "Date",
+            "example": "date",
+            "required": true
+          },
+          "interview_type": {
             "type": "string",
-            "example": "C++"
+            "example": "Online",
+            "required": true
+          },
+          "round": {
+            "type":"string",
+            "example": "HR round",
+            "required": true
+          },
+          "location": {
+            "type": "String",
+            "example": "Surat",
+            "required": true
           }
         }
       },
@@ -1086,6 +1118,10 @@
             "type": "string",
             "example": "office"
           },
+          "gender": {
+            "type": "string",
+            "example": "male"
+          },
           "resume": {
             "type": "string",
             "example": "Resume File"
@@ -1115,8 +1151,12 @@
           "example" : "10-10-10"
         },
         "interview_type": {
-          "type": "String",
+          "type": "string",
           "example" : "Online"
+        },
+        "round": {
+          "type": "string",
+          "example": "HR round"
         },
         "location": {
           "type": "String",
