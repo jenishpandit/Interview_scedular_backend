@@ -14,7 +14,7 @@ const technologySchema = new mongoose.Schema(
 technologySchema.set('toObject', {
     transform: function (doc, ret) {
         delete ret.__v
-    }
+    }   
 })
 
 const Technology = mongoose.model("Technology", technologySchema);
