@@ -71,7 +71,7 @@ export class InterviewController {
   async updateInterview(req, res) {
     try {
       const { id } = req.params;
-      const { status } = req.body; // Assuming status is passed in the request body
+      // const { status } = req.body; // Assuming status is passed in the request body
   
       const isInterview = await interviews.findById(id);
       if (!isInterview) {
@@ -79,18 +79,18 @@ export class InterviewController {
       }
   
       // Validate the status against enum values
-      if (!['create', 'complete', 'reschedule', 'rejected'].includes(status)) {
-        return res.status(400).json({ error: "Invalid status value" });
-      }
+      // if (!['create', 'complete', 'reschedule', 'rejected'].includes(status)) {
+      //   return res.status(400).json({ error: "Invalid status value" });
+      // }
   
       // Update only the status field using findByIdAndUpdate
-      await interviews.findByIdAndUpdate(id, { status });
+      await interviews.findByIdAndUpdate(id, req.body);
   
       // Fetch the updated data
       const updatedInterview = await interviews.findById(id);
   
       return res.status(200).json({
-        message: "Interview status updated successfully",
+        message: "Interview Data updated successfully",
         data: updatedInterview
       });
     } catch (err) {
