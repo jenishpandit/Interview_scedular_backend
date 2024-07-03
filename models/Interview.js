@@ -26,13 +26,19 @@ const interviewSchema = new mongoose.Schema(
         },
         round: {
             type:String,
-            enum: ["technical interview", "HR round", "reschedule"],
+            enum: ["technical interview","practical interview", "HR round", "reschedule"],
             required: true
         },
+       
         location: {
             type: String,
             required: true
-        }
+        },
+        status:{
+            type:String,
+            enum:['create','complete','reschedule','rejected'],
+            default:'create',
+        },
     },
     {
         timestamps: true
