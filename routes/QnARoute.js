@@ -1,14 +1,14 @@
-import {QnAController} from "../controllers/QnAController.js";
+import {QuestionsController} from "../controllers/QuestionsController.js";
 import express from "express";
 import AsyncHandler from "../middlewares/AsyncHandler.js";
 
-const QnARouter = express.Router();
-const qnaController = new QnAController();
+const QuestionsRouter = express.Router();
+const questionsController = new QuestionsController();
 
-QnARouter.post("/", AsyncHandler(qnaController.createQnA.bind(qnaController)))
-QnARouter.get("/", AsyncHandler(qnaController.getQnAs.bind(qnaController)))
-QnARouter.get("/:id", AsyncHandler(qnaController.getQnA.bind(qnaController)))
-QnARouter.put("/:id", AsyncHandler(qnaController.updateQnA.bind(qnaController)))
-QnARouter.delete("/:id", AsyncHandler(qnaController.deleteQnA.bind(qnaController)))
+QuestionsRouter.post("/", AsyncHandler(questionsController.createQnA.bind(questionsController)))
+QuestionsRouter.get("/", AsyncHandler(questionsController.getQnAs.bind(questionsController)))
+QuestionsRouter.get("/:id", AsyncHandler(questionsController.getQnA.bind(questionsController)))
+QuestionsRouter.put("/:id", AsyncHandler(questionsController.updateQnA.bind(questionsController)))
+QuestionsRouter.delete("/:id", AsyncHandler(questionsController.deleteQnA.bind(questionsController)))
 
-export default QnARouter;
+export default QuestionsRouter;

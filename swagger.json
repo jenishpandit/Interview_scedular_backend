@@ -178,6 +178,40 @@
         }
       }
     },
+    "candidate/role": {
+      "get": {
+        "tags": ["Candidate"],
+        "summary": "Get Candidates Job Role",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success.."
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CandidateRoleResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/candidate/{id}": {
       "get": {
         "tags": ["Candidate"],
@@ -913,6 +947,208 @@
         }
       }
     },
+    "/qna": {
+      "post": {
+        "tags": ["Question and Answer"],
+        "summary": "Create Question and Answer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QnABody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Question and Answer created successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Question and Answer Created Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/QnAResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Question and Answer"],
+        "summary": "Get all Question and Answer",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success.."
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QnAResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/qna/{id}": {
+      "get": {
+        "tags": ["Question and Answer"],
+        "summary": "Get Question and Answer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "QnA ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/QnAResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags": ["Question and Answer"],
+        "summary": "Update Question and Answer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "QnA ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "requestBody" : {
+          "required" : true,
+          "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/QnABody"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Question and Answer Updated Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Question and Answer Updated Successfully."
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/QnAResponse"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags": ["Question and Answer"],
+        "summary": "Delete Question and Answer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "QnA ID",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "responses" : {
+          "200" : {
+            "description" : "Question and Answer Deleted Successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Question and Answer Deleted Successfully."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "dashboard/total": {
       "get": {
         "tags": ["DashBoard"],
@@ -1003,9 +1239,14 @@
             "example": "WFH"
           },
           "gender": {
-            "type": "String",
+            "type": "string",
             "required": true,
             "example": "male"
+          },
+          "job_type": {
+            "type": "string",
+            "required": true,
+            "example": "backend developer"
           },
           "resume": {
             "type": "String",
@@ -1068,6 +1309,26 @@
           }
         }
       },
+      "QnABody": {
+        "type": "object",
+        "properties": {
+          "technology": {
+            "type":"objectId",
+            "required":true,
+            "example": "objectId"
+          },
+          "question":{
+            "type":"String",
+            "required":true,
+            "example": "react framework is made up of which language"
+          },
+          "answer":{
+            "type":"String",
+            "required":true,
+            "example": "react is js framework"
+          }
+        }
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -1122,9 +1383,27 @@
             "type": "string",
             "example": "male"
           },
+          "job_type": {
+            "type": "string",
+            "example": "backend developer"
+          },
           "resume": {
             "type": "string",
             "example": "Resume File"
+          }
+        }
+      },
+      "CandidateRoleResponse": {
+        "type": "object",
+        "properties": {
+          "technology_name": {
+            "type": "array",
+            "items": "string",
+            "example": ["Product Manager - IT",
+              "Quality Assurance Engineer",
+              "Scrum Master",
+              "Security Engineer",
+              "Software Engineer"]
           }
         }
       },
@@ -1169,6 +1448,23 @@
           "technology_name": {
             "type": "string",
             "example": "This is sample note"
+          }
+        }
+      },
+      "QnAResponse": {
+        "type": "object",
+        "properties": {
+          "technology": {
+            "type":"objectId",
+            "example": "6685221f4ac0e03fc6e3cce7"
+          },
+          "question":{
+            "type":"String",
+            "example": "react framework is made up of which language"
+          },
+          "answer":{
+            "type":"String",
+            "example": "react is js framework"
           }
         }
       },

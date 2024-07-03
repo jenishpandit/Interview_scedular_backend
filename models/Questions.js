@@ -18,4 +18,4 @@ const qnaSchema = new mongoose.Schema(
         }
     }
 );
-export const QnA = mongoose.model("QuestionAndAnswer", qnaSchema);
+export const Questions = mongoose.model("QuestionAndAnswer", qnaSchema);

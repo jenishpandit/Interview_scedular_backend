@@ -8,11 +8,11 @@ import {validate} from "../middlewares/Validator.js";
 const candidateRouter = express.Router();
 const candidateController = new CandidateController();
 
-// api routes
 candidateRouter.post('/', multerHandler, candidateValidate, validate, AsyncHandler(candidateController.createCandidate.bind(candidateController)));
+candidateRouter.get('/roles', AsyncHandler(candidateController.CandidateRoles.bind(candidateController)))
 candidateRouter.get('/', AsyncHandler(candidateController.getCandidates.bind(candidateController)));
 candidateRouter.get('/:id', candidateIDValidate, validate,AsyncHandler(candidateController.getCandidate.bind(candidateController)));
 candidateRouter.put('/:id', multerHandler, candidateIDValidate, candidateUpdateValidate, validate, AsyncHandler(candidateController.updateCandidate.bind(candidateController)));
-candidateRouter.delete('/:id', candidateIDValidate, validate, AsyncHandler(candidateController.deleteCandidate.bind(candidateController)))
+candidateRouter.delete('/:id', candidateIDValidate, validate, AsyncHandler(candidateController.deleteCandidate.bind(candidateController)));
 
 export default candidateRouter;

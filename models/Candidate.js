@@ -36,6 +36,10 @@ const candidateSchema = new mongoose.Schema(
             enum:["male","female","others"],
             required: true
         },
+        Job_role:{
+            type:String,
+            required:true
+        },
         resume: {
             type: String,
             required: true

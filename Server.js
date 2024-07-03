@@ -33,7 +33,7 @@ app.use('/candidate', authMiddleware, candidateRouter);
 app.use('/note', authMiddleware,noteRouter);
 app.use('/interview', authMiddleware, interviewRouter);
 app.use('/dashboard', authMiddleware, DashBoardRouter);
-app.use('/qna',authMiddleware, QnARouter)
+app.use('/questions',authMiddleware, QnARouter)
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

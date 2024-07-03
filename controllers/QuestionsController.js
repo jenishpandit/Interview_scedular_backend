@@ -1,8 +1,8 @@
 import Technology from "../models/Technology.js";
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
-import {QnA} from "../models/QnA.js";
+import {Questions} from "../models/Questions.js";
 
-export class QnAController{
+export class QuestionsController {
     constructor() {}
 
         async createQnA(req, res) {
@@ -12,7 +12,7 @@ export class QnAController{
                 const isTech = await Technology.findById(body.technology);
                 if(!isTech) return errorResponse(res, 'Technology Not Found !!', 400);
 
-                await QnA.create(body);
+                await Questions.create(body);
                 successResponse(res, body, "Question and Answer are Created Successfully", 201);
             }catch(err){
                 console.log("CREATE QUESTION AND ANSWER ERROR : ", err);
@@ -22,7 +22,7 @@ export class QnAController{
 
         async getQnAs(req, res){
             try{
-                const data = await QnA.find({});
+                const data = await Questions.find({});
                 successResponse(res, data, "All Question and Answer data Successfully", 201);
             }catch(err){
                 console.log("GET ALL QUESTION AND ANSWER ERROR : ", err);
@@ -34,7 +34,7 @@ export class QnAController{
             try{
                 const { id } = req.params;
 
-                const resData = await QnA.findById(id);
+                const resData = await Questions.findById(id);
 
                 successResponse(res, resData, "Question and Answer Showed By Id Successfully", 201);
             }catch(err){
@@ -48,11 +48,11 @@ export class QnAController{
                 const { id } = req.params;
                 const { body } = req;
 
-                const isQnA = await QnA.findById(id);
+                const isQnA = await Questions.findById(id);
                 if(!isQnA) return errorResponse(res, 'Question and Answer Not Found !!', 400);
 
-                await QnA.findByIdAndUpdate(id, body);
-                const resData = await QnA.findById(id);
+                await Questions.findByIdAndUpdate(id, body);
+                const resData = await Questions.findById(id);
 
                 successResponse(res, resData, "Question and Answer Updated Successfully", 201);
             }catch(err){
@@ -65,9 +65,9 @@ export class QnAController{
             try{
                 const { id } = req.params;
 
-                const isQnA = await QnA.findById(id);
+                const isQnA = await Questions.findById(id);
                 if(!isQnA) return errorResponse(res, 'Question and Answer Not Found !!', 400);
-                await QnA.findByIdAndDelete(id);
+                await Questions.findByIdAndDelete(id);
 
                 successResponse(res, "Question and Answer Deleted Successfully", 201);
             }catch(err){

@@ -1,12 +1,12 @@
 import Technology from "../models/Technology.js";
 import Candidate from "../models/Candidate.js";
 import { errorResponse, successResponse } from "../utils/ResponseHandler.js";
+import {CANDIDATE_ROLES} from "../constants/candidateRoles.js";
 
 export class CandidateController {
   constructor() {}
 
   async createCandidate(req, res) {
-    console.log("dssdsdsd");
     try {
       const { body } = req;
       console.log(req);
@@ -20,7 +20,8 @@ export class CandidateController {
         phone_number,
         technology_id,
         type,
-        gender
+        gender,
+        job_role
       } = body;
       console.log(body,"=========");
 
@@ -39,6 +40,7 @@ export class CandidateController {
         technology_id,
         type,
         gender,
+        job_role,
         resume: image,
       };
 
@@ -135,4 +137,14 @@ export class CandidateController {
       errorResponse(res, err.message, 400);
     }
   }
+
+  async CandidateRoles(req, res){
+    try{
+      successResponse(res, CANDIDATE_ROLES, "Candidate Roles data Showed successfully");
+    }catch(err){
+      console.log(" CANDIDATE ROLE ERROR : ", err);
+      errorResponse(res, err.message, 400);
+    }
+  }
 }
+
