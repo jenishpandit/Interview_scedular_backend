@@ -1,16 +1,18 @@
 import mongoose from 'mongoose';
+import User from "./User.js";
+import Candidate from "./Candidate.js";
 
 // creating mongoose schema for interview
 const interviewSchema = new mongoose.Schema(
     {
         candidate_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Candidate',
+            ref: Candidate,
             required: true
         },
         created_by: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'users',
+            ref: User,
             required: true
         },
         interview_date: {

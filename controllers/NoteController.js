@@ -1,5 +1,6 @@
 import notes from "../models/Note.js";
-// importing response handler
+import Candidate from "../models/Candidate.js";
+import Interview from "../models/Interview.js";
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 
 export class NoteController {
@@ -9,8 +10,14 @@ export class NoteController {
     async createNote(req, res) {
         try {
             const {body} = req;
-            await notes.create(body);
 
+            const isInterview = await Interview.findById(body.interview_id);
+            if(!isInterview) return errorResponse(res, "Interview Not Found !!", 400);
+
+            const isCandidate = await Candidate.findById(body.candidate);
+            if(!isCandidate) return errorResponse(res, "Candidate Not Found !!", 400);
+
+            await notes.create(body);
             successResponse(res, body, "Notes  Created Successfully.");
 
         } catch (err) {
@@ -35,8 +42,6 @@ export class NoteController {
             const {id} = req.params;
 
             const data = await notes.find({interview_id:id});
-            console.log(id);
-            console.log("data =",data);
 
             if (!data) return errorResponse(res, "invalid ID", 400);
             successResponse(res, data,"Notes Data Showed by ID Successfully");

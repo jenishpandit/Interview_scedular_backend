@@ -1,11 +1,18 @@
 import mongoose from "mongoose";
+import Candidate from "./Candidate.js";
+import Interview from "./Interview.js";
 
 // creating mongoose schema for notes
 const noteSchema = new mongoose.Schema(
     {
         interview_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'interviews',
+            ref: Interview,
+            required: true
+        },
+        candidate:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref: Candidate,
             required: true
         },
         note_text: {

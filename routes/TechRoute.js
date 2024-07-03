@@ -1,8 +1,6 @@
 import express from "express";
-// importing api controllers
 import { TechController } from "../controllers/TechController.js";
 import AsyncHandler from "../middlewares/AsyncHandler.js";
-// importing validator middlewares
 import {techValidation, techParamsValidation} from "../validations/TechValidation.js";
 import {validate} from "../middlewares/Validator.js";
 

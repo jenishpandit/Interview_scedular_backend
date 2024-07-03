@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Technology from "./Technology.js";
+
 // creating mongoose schema for candidate
 const candidateSchema = new mongoose.Schema(
     {
@@ -21,7 +23,7 @@ const candidateSchema = new mongoose.Schema(
         },
         technology_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Technology',
+            ref: Technology,
             required: true
         },
         type: {

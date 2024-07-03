@@ -3,8 +3,7 @@ import candidates from "../models/Candidate.js";
 import {errorResponse, successResponse} from "../utils/ResponseHandler.js";
 
 export class TechController {
-    constructor() {
-    }
+    constructor() {}
 
     async createTechnology(req, res) {
         try {
@@ -13,8 +12,8 @@ export class TechController {
             let isTech = await Technology.findOne({technology_name : body.technology_name});
             if(isTech) return errorResponse(res, 'Technology name must be unique', 400);
 
-            const data = await Technology.create(body);
-            successResponse(res, data, "Technology Created Successfully.", 201)
+            await Technology.create(body);
+            successResponse(res, body, "Technology Created Successfully.", 201);
         } catch (err) {
             console.log("CREATE TECHNOLOGY Error: ", err)
             errorResponse(res, err.message, 400);

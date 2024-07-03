@@ -20,7 +20,7 @@ export class InterviewController {
   async getInterviews(req, res) {
     try {
       const filter = req.query.filter;
-      const condition = {};
+      let condition = {};
       const startOfDay = moment().startOf("day");
       const endOfDay = moment().endOf("day");
       if (filter === "today") {
@@ -38,6 +38,7 @@ export class InterviewController {
       } else {
         condition = {};
       }
+
       const data = await interviews.find(condition).populate({
         path: "candidate_id",
         populate: {
