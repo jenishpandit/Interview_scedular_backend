@@ -18,29 +18,39 @@ export class CandidateController {
         last_name,
         email,
         phone_number,
-        technology_id,
+        // technology_id,
         type,
         gender,
-        job_role
+        skills,
+        job_role,
       } = body;
-      console.log(body,"=========");
+      console.log(body,"=========");  
 
-      const isTech = await Technology.findById(technology_id);
-      if (!isTech) return errorResponse(res, "Technology not found!", 400);
+      // const isTech = await Technology.findById(technology_id);
+      // if (!isTech) return errorResponse(res, "Technology not found!", 400);
 
       const isCandidate = await Candidate.findOne({ email });
       if (isCandidate)
         return errorResponse(res, "Please try unique email address!", 400);
 
+      let skillsArray;
+      if (typeof skills === 'string') {
+        skillsArray = skills.split(',').map(skill => skill.trim());
+      } else if (Array.isArray(skills)) {
+        skillsArray = skills;
+      } else {
+        return errorResponse(res, "Invalid format for skills!", 400);
+      }
       let candidateData = {
         first_name,
         last_name,
         email,
         phone_number,
-        technology_id,
+        // technology_id,
         type,
         gender,
         job_role,
+        skills:skillsArray,
         resume: image,
       };
 
@@ -54,18 +64,12 @@ export class CandidateController {
 
   async getCandidates(req, res) {
     try {
-      const data = await Candidate.find().populate({
-        path: "technology_id",
-        select: "technology_name",
-      });
+      const data = await Candidate.find()
 
       const newData = data.map((item) => {
         const newObject = item.toObject();
-        const technology = newObject.technology_id;
-        delete newObject.technology_id;
         return {
           ...newObject,
-          technology,
         };
       });
 
@@ -80,18 +84,19 @@ export class CandidateController {
     try {
       const { id } = req.params;
 
-      const data = await Candidate.findById(id).populate({
-        path: "technology_id",
-        select: "technology_name",
-      });
+      const data = await Candidate.findById(id)
+      // .populate({
+      //   path: "technology_id",
+      //   select: "technology_name",
+      // });
       if (!data) return errorResponse(res, "Technology not found!", 400);
 
       let newObject = data.toObject();
-      const technology = newObject.technology_id;
-      delete newObject.technology_id;
+      // const technology = newObject.technology_id;
+      // delete newObject.technology_id;
       const newData = {
         ...newObject,
-        technology,
+        // technology,
       };
 
       successResponse(res, newData, "Candidate Data Showed by ID Successfully");
@@ -112,6 +117,15 @@ export class CandidateController {
 
       let candidateData = { ...body };
       if (image) candidateData.resume = image;
+      if (body.skills) {
+        if (typeof body.skills === 'string') {
+          candidateData.skills = body.skills.split(',').map(skill => skill.trim());
+        } else if (Array.isArray(body.skills)) {
+          candidateData.skills = body.skills;
+        } else {
+          return errorResponse(res, "Invalid format for skills!", 400);
+        }
+      }
 
       await Candidate.findByIdAndUpdate(id, candidateData);
       let data = await Candidate.findOne({ _id: id });

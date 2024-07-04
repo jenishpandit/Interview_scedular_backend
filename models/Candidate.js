@@ -21,10 +21,14 @@ const candidateSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        technology_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: Technology,
-            required: true
+        // technology_id: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: Technology,
+        //     required: true
+        // },
+        skills:{
+            type:[String],
+            required:true,
         },
         type: {
             type: String,
@@ -36,7 +40,7 @@ const candidateSchema = new mongoose.Schema(
             enum:["male","female","others"],
             required: true
         },
-        Job_role:{
+        job_role:{
             type:String,
             required:true
         },
