@@ -22,11 +22,10 @@ export class QuestionsController {
 
         async getQnAs(req, res){
             try{
-                const AllQuestions = await Questions.find({});
-
+                const All_questions = await Questions.find({});
                 const QCount = await Questions.countDocuments();
-                console.log(QCount);
-                const resData = { AllQuestions,"total count":QCount};
+
+                const resData = { All_questions,"total count":QCount};
                 successResponse(res, resData,"All Question and Answer data Successfully" , 201);
             }catch(err){
                 console.log("GET ALL QUESTION AND ANSWER ERROR : ", err);
@@ -71,13 +70,12 @@ export class QuestionsController {
 
                 const isQnA = await Questions.findById(id);
                 if(!isQnA) return errorResponse(res, 'Question and Answer Not Found !!', 400);
-                await Questions.findByIdAndDelete(id);
 
-                successResponse(res, "Question and Answer Deleted Successfully", 201);
+                await Questions.findByIdAndDelete(id);
+                successResponse(res, null,"Question and Answer Deleted Successfully", 201);
             }catch(err){
                 console.log("DELETE QUESTION AND ANSWER ERROR : ", err);
                 errorResponse(res, 'Question and Answer Not Found !!', 400);
             }
         }
-
 }

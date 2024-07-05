@@ -41,11 +41,7 @@ export class InterviewController {
       }
 
       const data = await interviews.find(condition).populate({
-        path: "candidate_id",
-        populate: {
-          path: 'technology_id',
-          model: 'Technology'
-        }
+        path: "candidate_id"
       });
       successResponse(res, data, "All interviews data showed successfully");
     } catch (err) {
