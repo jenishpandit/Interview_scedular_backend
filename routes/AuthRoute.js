@@ -4,7 +4,7 @@ import AsyncHandler from "../middlewares/AsyncHandler.js";
 import {loginValidation, registerValidation} from "../validations/AuthValidation.js";
 import {validate} from "../middlewares/Validator.js";
 
-const authRouter = express.Router();
+const   authRouter = express.Router();
 const authController = new AuthController();
 
 // API routes
