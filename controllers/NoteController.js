@@ -88,7 +88,7 @@ export class NoteController {
 
     async getLatestNote(req, res){
         try{
-            const data = await notes.find().sort({createdAt:-1}).limit(1);
+            const data = await notes.findOne().sort({createdAt:-1}).limit(1);
             successResponse(res, data,"Latest Notes Data Successfully");
         }catch(err){
             console.log(' getLatestNote ERROR : ', err);

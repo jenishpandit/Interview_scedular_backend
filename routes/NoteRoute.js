@@ -1,8 +1,6 @@
 import express from 'express';
-// importing api controllers
 import { NoteController } from "../controllers/NoteController.js";
 import AsyncHandler from "../middlewares/AsyncHandler.js";
-// importing validator middlewares
 import {noteValidate, noteIDValidate} from "../validations/NoteValidation.js";
 import {validate} from "../middlewares/Validator.js";
 
