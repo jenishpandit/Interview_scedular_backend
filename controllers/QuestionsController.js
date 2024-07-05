@@ -22,8 +22,12 @@ export class QuestionsController {
 
         async getQnAs(req, res){
             try{
-                const data = await Questions.find({});
-                successResponse(res, data, "All Question and Answer data Successfully", 201);
+                const AllQuestions = await Questions.find({});
+
+                const QCount = await Questions.countDocuments();
+                console.log(QCount);
+                const resData = { AllQuestions,"total count":QCount};
+                successResponse(res, resData,"All Question and Answer data Successfully" , 201);
             }catch(err){
                 console.log("GET ALL QUESTION AND ANSWER ERROR : ", err);
                 errorResponse(res, 'Question and Answer Not Found !!', 400);

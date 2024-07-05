@@ -15,6 +15,11 @@ const qnaSchema = new mongoose.Schema(
         answer:{
             type:String,
             required:true
+        },
+        show: {
+            type:Boolean,
+            required:false,
+            default:true
         }
     }
 );

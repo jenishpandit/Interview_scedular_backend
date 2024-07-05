@@ -947,7 +947,7 @@
         }
       }
     },
-    "/qna": {
+    "/questions": {
       "post": {
         "tags": ["Question and Answer"],
         "summary": "Create Question and Answer",
@@ -1020,7 +1020,7 @@
         }
       }
     },
-    "/qna/{id}": {
+    "/questions/{id}": {
       "get": {
         "tags": ["Question and Answer"],
         "summary": "Get Question and Answer",
