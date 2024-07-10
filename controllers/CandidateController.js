@@ -1,7 +1,7 @@
 import Technology from "../models/Technology.js";
 import Candidate from "../models/Candidate.js";
 import { errorResponse, successResponse } from "../utils/ResponseHandler.js";
-import {CANDIDATE_ROLES} from "../constants/candidateRoles.js";
+import { CANDIDATE_ROLES } from "../constants/candidateRoles.js";
 
 export class CandidateController {
   constructor() {}
@@ -24,7 +24,7 @@ export class CandidateController {
         skills,
         job_role,
       } = body;
-      console.log(body,"=========");  
+      console.log(body, "=========");
 
       // const isTech = await Technology.findById(technology_id);
       // if (!isTech) return errorResponse(res, "Technology not found!", 400);
@@ -34,8 +34,8 @@ export class CandidateController {
         return errorResponse(res, "Please try unique email address!", 400);
 
       let skillsArray;
-      if (typeof skills === 'string') {
-        skillsArray = skills.split(',').map(skill => skill.trim());
+      if (typeof skills === "string") {
+        skillsArray = skills.split(",").map((skill) => skill.trim());
       } else if (Array.isArray(skills)) {
         skillsArray = skills;
       } else {
@@ -50,7 +50,7 @@ export class CandidateController {
         type,
         gender,
         job_role,
-        skills:skillsArray,
+        skills: skillsArray,
         resume: image,
       };
 
@@ -63,9 +63,23 @@ export class CandidateController {
   }
 
   async getCandidates(req, res) {
+    const { filters } = req.query;
     try {
-      const data = await Candidate.find()
+      let filter = {}; // Default empty query
 
+      // Construct the query based on the provided filters parameter
+      if (filters) {
+        const regex = new RegExp(filters, "i"); // Case-insensitive search
+        filter = {
+          $or: [
+            { first_name: regex },
+            { last_name: regex }, 
+            { email: regex },
+            { job_role: regex },
+          ],
+        };
+      }
+      const data = await Candidate.find(filter);
       const newData = data.map((item) => {
         const newObject = item.toObject();
         return {
@@ -84,7 +98,7 @@ export class CandidateController {
     try {
       const { id } = req.params;
 
-      const data = await Candidate.findById(id)
+      const data = await Candidate.findById(id);
       // .populate({
       //   path: "technology_id",
       //   select: "technology_name",
@@ -118,8 +132,10 @@ export class CandidateController {
       let candidateData = { ...body };
       if (image) candidateData.resume = image;
       if (body.skills) {
-        if (typeof body.skills === 'string') {
-          candidateData.skills = body.skills.split(',').map(skill => skill.trim());
+        if (typeof body.skills === "string") {
+          candidateData.skills = body.skills
+            .split(",")
+            .map((skill) => skill.trim());
         } else if (Array.isArray(body.skills)) {
           candidateData.skills = body.skills;
         } else {
@@ -152,13 +168,16 @@ export class CandidateController {
     }
   }
 
-  async CandidateRoles(req, res){
-    try{
-      successResponse(res, CANDIDATE_ROLES, "Candidate Roles data Showed successfully");
-    }catch(err){
+  async CandidateRoles(req, res) {
+    try {
+      successResponse(
+        res,
+        CANDIDATE_ROLES,
+        "Candidate Roles data Showed successfully"
+      );
+    } catch (err) {
       console.log(" CANDIDATE ROLE ERROR : ", err);
       errorResponse(res, err.message, 400);
     }
   }
 }
-

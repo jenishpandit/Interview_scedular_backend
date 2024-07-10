@@ -32,11 +32,11 @@ const interviewSchema = new mongoose.Schema(
        
         location: {
             type: String,
-            required: true
-        },
-        status:{
-            type:String,
-            enum:['create','complete','reschedule','rejected'],
+                required: true
+            },
+            status:{
+                type:String,
+                enum:['create','complete','reschedule','rejected'],
             default:'create',
         },
     },
