@@ -85,4 +85,14 @@ export class NoteController {
             errorResponse(res, err.message, 400);
         }
     }
+
+    async getLatestNote(req, res){
+        try{
+            const data = await notes.findOne().sort({createdAt:-1}).limit(1);
+            successResponse(res, data,"Latest Notes Data Successfully");
+        }catch(err){
+            console.log(' getLatestNote ERROR : ', err);
+            errorResponse(res, err.message, 400);
+        }
+    }
 }
