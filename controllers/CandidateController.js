@@ -2,6 +2,7 @@ import Technology from "../models/Technology.js";
 import Candidate from "../models/Candidate.js";
 import { errorResponse, successResponse } from "../utils/ResponseHandler.js";
 import { CANDIDATE_ROLES } from "../constants/candidateRoles.js";
+import Interview from "../models/Interview.js";
 
 export class CandidateController {
   constructor() {}
@@ -72,7 +73,7 @@ export class CandidateController {
         const regex = new RegExp(filters, "i"); // Case-insensitive search
         filter = {
           $or: [
-            { first_name: regex },
+            { first_name: regex },  
             { last_name: regex }, 
             { email: regex },
             { job_role: regex },
@@ -157,7 +158,10 @@ export class CandidateController {
     try {
       const { id } = req.params;
       const isCandidate = await Candidate.findById(id);
+     const InterviewData = await Interview.find({candidate_id:id})
 
+     await Interview.deleteMany({ candidate_id: id });
+     console.log(InterviewData, "ssfssfsfs");
       if (!isCandidate) return errorResponse(res, "invalid ID", 400);
 
       await Candidate.findByIdAndDelete(id);
