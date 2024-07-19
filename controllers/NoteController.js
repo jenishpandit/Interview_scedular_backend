@@ -88,11 +88,11 @@ export class NoteController {
 
     async getLatestNote(req, res){
         try{
-            // const { id } = req.params;
-            // const data = await notes.findOne({ interview_id :id })
-            // .sort({ createdAt: -1 }) // Replace with your timestamp field
-            // .limit(1);
-            const data = await notes.findOne().sort({createdAt:-1}).limit(1);
+            const { id } = req.params;
+            const data = await notes.findOne({ candidate :id })
+            .sort({ createdAt: -1 }) // Replace with your timestamp field
+            .limit(1);
+            // const data = await notes.findOne().sort({createdAt:-1}).limit(1).populate("");
             successResponse(res, data,"Latest Notes Data Successfully");
         }catch(err){
             console.log(' getLatestNote ERROR : ', err);
