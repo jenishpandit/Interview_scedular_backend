@@ -1,4 +1,4 @@
-// import Technology from "../models/Technology.js";
+import Technology from "../models/Technology.js";
 import Candidate from "../models/Candidate.js";
 import { errorResponse, successResponse } from "../utils/ResponseHandler.js";
 import {CANDIDATE_ROLES} from "../constants/candidateRoles.js";
@@ -9,6 +9,7 @@ export class CandidateController {
   async createCandidate(req, res) {
     try {
       const { body } = req;
+      console.log(req);
       const image = req.file.path;
 
       if (!image) return errorResponse(res, "please enter your resume!", 404);
@@ -23,6 +24,7 @@ export class CandidateController {
         skills,
         job_role,
       } = body;
+      console.log(body,"=========");  
 
       // const isTech = await Technology.findById(technology_id);
       // if (!isTech) return errorResponse(res, "Technology not found!", 400);
