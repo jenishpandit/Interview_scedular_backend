@@ -6,10 +6,12 @@ const candidateSchema = new mongoose.Schema(
     {
         first_name: {
             type: String,
+            trim:true,
             required: true
         },
         last_name: {
             type: String,
+            trim:true,
             required: true
         },
         email: {
@@ -47,6 +49,10 @@ const candidateSchema = new mongoose.Schema(
         resume: {
             type: String,
             required: true
+        },
+        candidate_status :{
+            type:String,
+            enum :["selected" , "rejected" , "not_joining"],
         }
     },
     {

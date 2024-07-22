@@ -1,6 +1,7 @@
 import { errorResponse, successResponse } from "../utils/ResponseHandler.js";
 import interviews from "../models/Interview.js";
 import moment from "moment";
+import Note from "../models/Note.js";
 
 export class InterviewController {
   constructor() {}
@@ -20,17 +21,16 @@ export class InterviewController {
 
   async getInterviews(req, res) {
     try {
-      const filter = req.query.filter;
+      const { filter } = req.query;
       let condition = {};
       const startOfDay = moment().startOf("day");
       const endOfDay = moment().endOf("day");
       if (filter === "today") {
-
         condition.interview_date = {
           $gte: startOfDay.toDate(),
           $lt: endOfDay.toDate(),
         };
-      }  else if (filter === "upcoming") {
+      } else if (filter === "upcoming") {
         const startOfToday = moment().add(1, "days").startOf("day");
 
         condition.interview_date = {
@@ -42,12 +42,6 @@ export class InterviewController {
 
       const data = await interviews.find(condition).populate({
         path: "candidate_id",
-        // populate: {
-        //   path: 'technology_id',
-        //   model: 'Technology'
-        // }
-
-        path: "candidate_id"
       });
       successResponse(res, data, "All interviews data showed successfully");
     } catch (err) {
@@ -60,9 +54,6 @@ export class InterviewController {
     try {
       const { id } = req.params;
       const data = await interviews.find({ candidate_id: id });
-      //   console.log(id);
-      //   console.log("data =", data);
-
       if (!data) return errorResponse(res, "invalid ID", 400);
       successResponse(res, data, "Interview Data Showed by ID Successfully");
     } catch (err) {
@@ -74,27 +65,19 @@ export class InterviewController {
   async updateInterview(req, res) {
     try {
       const { id } = req.params;
-      // const { status } = req.body; // Assuming status is passed in the request body
-  
+
       const isInterview = await interviews.findById(id);
       if (!isInterview) {
         return res.status(400).json({ error: "Invalid ID" });
       }
-  
-      // Validate the status against enum values
-      // if (!['create', 'complete', 'reschedule', 'rejected'].includes(status)) {
-      //   return res.status(400).json({ error: "Invalid status value" });
-      // }
-  
-      // Update only the status field using findByIdAndUpdate
       await interviews.findByIdAndUpdate(id, req.body);
-  
+
       // Fetch the updated data
       const updatedInterview = await interviews.findById(id);
-  
+
       return res.status(200).json({
         message: "Interview Data updated successfully",
-        data: updatedInterview
+        data: updatedInterview,
       });
     } catch (err) {
       console.log("UPDATE INTERVIEW ERROR : ", err);
@@ -105,8 +88,11 @@ export class InterviewController {
   async deleteInterview(req, res) {
     try {
       const { id } = req.params;
-
       const isInterview = await interviews.findById(id);
+      const NotesData = await Note.find({ interview_id: id });
+
+      await Note.deleteMany({ interview_id: id });
+      console.log(NotesData, "ssfssfsfs");
       if (!isInterview) return errorResponse(res, "invalid ID", 400);
       await interviews.findByIdAndDelete(id);
 

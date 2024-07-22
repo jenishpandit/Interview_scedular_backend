@@ -1,7 +1,9 @@
 import Technology from "../models/Technology.js";
 import Candidate from "../models/Candidate.js";
 import { errorResponse, successResponse } from "../utils/ResponseHandler.js";
-import {CANDIDATE_ROLES} from "../constants/candidateRoles.js";
+import { CANDIDATE_ROLES } from "../constants/candidateRoles.js";
+import Interview from "../models/Interview.js";
+import Note from "../models/Note.js";
 
 export class CandidateController {
   constructor() {}
@@ -24,7 +26,7 @@ export class CandidateController {
         skills,
         job_role,
       } = body;
-      console.log(body,"=========");  
+      console.log(body, "=========");
 
       // const isTech = await Technology.findById(technology_id);
       // if (!isTech) return errorResponse(res, "Technology not found!", 400);
@@ -34,8 +36,8 @@ export class CandidateController {
         return errorResponse(res, "Please try unique email address!", 400);
 
       let skillsArray;
-      if (typeof skills === 'string') {
-        skillsArray = skills.split(',').map(skill => skill.trim());
+      if (typeof skills === "string") {
+        skillsArray = skills.split(",").map((skill) => skill.trim());
       } else if (Array.isArray(skills)) {
         skillsArray = skills;
       } else {
@@ -50,7 +52,7 @@ export class CandidateController {
         type,
         gender,
         job_role,
-        skills:skillsArray,
+        skills: skillsArray,
         resume: image,
       };
 
@@ -63,9 +65,29 @@ export class CandidateController {
   }
 
   async getCandidates(req, res) {
+    const { filters, page = 1, limit = 10 } = req.query;
     try {
-      const data = await Candidate.find()
+      let filter = {};
+      if (filters) {
+        const regex = new RegExp(filters, "i"); // Case-insensitive search
+        filter = {
+          $or: [
+            { first_name: regex },
+            { last_name: regex },
+            { email: regex },
+            { job_role: regex },
+          ],
+        };
+      }
+      const pageInt = parseInt(page, 10);
+      const limitInt = parseInt(limit, 10);
+      const skip = (pageInt - 1) * limitInt;
 
+      // Get the total count of matching documents
+      const totalCandidates = await Candidate.countDocuments(filter);
+
+      // Fetch the candidates with limit and skip for pagination
+      const data = await Candidate.find(filter).limit(limitInt).skip(skip);
       const newData = data.map((item) => {
         const newObject = item.toObject();
         return {
@@ -73,18 +95,29 @@ export class CandidateController {
         };
       });
 
-      successResponse(res, newData, "All Candidates Showed Successfully");
+      // Add pagination info to the response
+      const pagination = {
+        // total: totalCandidates,
+        // page: pageInt,
+        // limit: limitInt,
+        totalPages: Math.ceil(totalCandidates / limitInt),
+      };
+
+      successResponse(
+        res,
+        { candidates: newData, pagination },
+        "All Candidates Showed Successfully"
+      );
     } catch (err) {
       console.log("GET ALL CANDIDATE ERROR: ", err);
       errorResponse(res, err.message, 400);
     }
   }
-
   async getCandidate(req, res) {
     try {
       const { id } = req.params;
 
-      const data = await Candidate.findById(id)
+      const data = await Candidate.findById(id);
       // .populate({
       //   path: "technology_id",
       //   select: "technology_name",
@@ -118,8 +151,10 @@ export class CandidateController {
       let candidateData = { ...body };
       if (image) candidateData.resume = image;
       if (body.skills) {
-        if (typeof body.skills === 'string') {
-          candidateData.skills = body.skills.split(',').map(skill => skill.trim());
+        if (typeof body.skills === "string") {
+          candidateData.skills = body.skills
+            .split(",")
+            .map((skill) => skill.trim());
         } else if (Array.isArray(body.skills)) {
           candidateData.skills = body.skills;
         } else {
@@ -141,7 +176,13 @@ export class CandidateController {
     try {
       const { id } = req.params;
       const isCandidate = await Candidate.findById(id);
+      const InterviewData = await Interview.find({ candidate_id: id });
+      const NoteData = await Note.find({ candidate: id });
 
+      await Interview.deleteMany({ candidate_id: id });
+      await Note.deleteMany({ candidate: id });
+      console.log(NoteData);
+      console.log(InterviewData, "ssfssfsfs");
       if (!isCandidate) return errorResponse(res, "invalid ID", 400);
 
       await Candidate.findByIdAndDelete(id);
@@ -152,13 +193,16 @@ export class CandidateController {
     }
   }
 
-  async CandidateRoles(req, res){
-    try{
-      successResponse(res, CANDIDATE_ROLES, "Candidate Roles data Showed successfully");
-    }catch(err){
+  async CandidateRoles(req, res) {
+    try {
+      successResponse(
+        res,
+        CANDIDATE_ROLES,
+        "Candidate Roles data Showed successfully"
+      );
+    } catch (err) {
       console.log(" CANDIDATE ROLE ERROR : ", err);
       errorResponse(res, err.message, 400);
     }
   }
 }
-

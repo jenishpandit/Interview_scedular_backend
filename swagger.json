@@ -19,7 +19,9 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register a new user",
         "requestBody": {
           "required": true,
@@ -57,7 +59,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login to obtain access token",
         "requestBody": {
           "required": true,
@@ -107,7 +111,9 @@
     },
     "/candidate": {
       "post": {
-        "tags": ["Candidate"],
+        "tags": [
+          "Candidate"
+        ],
         "summary": "Create Candidate",
         "requestBody": {
           "required": true,
@@ -146,8 +152,31 @@
         }
       },
       "get": {
-        "tags": ["Candidate"],
+        "tags": [
+          "Candidate"
+        ],
         "summary": "Get all Candidates",
+        "parameters": [
+          {
+            "name": "filters",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter candidates"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success.",
@@ -180,7 +209,9 @@
     },
     "candidate/role": {
       "get": {
-        "tags": ["Candidate"],
+        "tags": [
+          "Candidate"
+        ],
         "summary": "Get Candidates Job Role",
         "responses": {
           "200": {
@@ -214,7 +245,9 @@
     },
     "/candidate/{id}": {
       "get": {
-        "tags": ["Candidate"],
+        "tags": [
+          "Candidate"
+        ],
         "summary": "Get Candidate",
         "parameters": [
           {
@@ -253,8 +286,10 @@
           }
         }
       },
-      "put" : {
-        "tags": ["Candidate"],
+      "put": {
+        "tags": [
+          "Candidate"
+        ],
         "summary": "Update Candidate",
         "parameters": [
           {
@@ -267,19 +302,19 @@
             "required": "true"
           }
         ],
-        "requestBody" : {
-          "required" : true,
+        "requestBody": {
+          "required": true,
           "content": {
-            "application/json" : {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CandidateBody"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Candidate Updated Successfully.",
+        "responses": {
+          "200": {
+            "description": "Candidate Updated Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -302,9 +337,11 @@
             }
           }
         }
-    },
-      "delete" : {
-        "tags": ["Candidate"],
+      },
+      "delete": {
+        "tags": [
+          "Candidate"
+        ],
         "summary": "Delete Candidate",
         "parameters": [
           {
@@ -317,9 +354,9 @@
             "required": "true"
           }
         ],
-        "responses" : {
-          "200" : {
-            "description" : "Candidate Deleted Successfully.",
+        "responses": {
+          "200": {
+            "description": "Candidate Deleted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -340,10 +377,12 @@
           }
         }
       }
-},
+    },
     "/technology": {
       "post": {
-        "tags": ["Technology"],
+        "tags": [
+          "Technology"
+        ],
         "summary": "Create technology",
         "requestBody": {
           "required": true,
@@ -382,8 +421,22 @@
         }
       },
       "get": {
-        "tags": ["Technology"],
+        "tags": [
+          "Technology"
+        ],
         "summary": "Get all technologies",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          }
+        ],
         "responses": {
           "200": {
             "description": "All Technology data showed successfully",
@@ -416,7 +469,9 @@
     },
     "/technology/{id}": {
       "get": {
-        "tags": ["Technology"],
+        "tags": [
+          "Technology"
+        ],
         "summary": "Get Technology",
         "parameters": [
           {
@@ -455,8 +510,10 @@
           }
         }
       },
-      "put" : {
-        "tags": ["Technology"],
+      "put": {
+        "tags": [
+          "Technology"
+        ],
         "summary": "Update Technology",
         "parameters": [
           {
@@ -469,19 +526,19 @@
             "required": "true"
           }
         ],
-        "requestBody" : {
-          "required" : true,
+        "requestBody": {
+          "required": true,
           "content": {
-            "application/json" : {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TechnologyBody"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Technology Updated Successfully.",
+        "responses": {
+          "200": {
+            "description": "Technology Updated Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -505,8 +562,10 @@
           }
         }
       },
-      "delete" : {
-        "tags": ["Technology"],
+      "delete": {
+        "tags": [
+          "Technology"
+        ],
         "summary": "Delete Technology",
         "parameters": [
           {
@@ -519,9 +578,9 @@
             "required": "true"
           }
         ],
-        "responses" : {
-          "200" : {
-            "description" : "Technology Deleted Successfully.",
+        "responses": {
+          "200": {
+            "description": "Technology Deleted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -545,7 +604,9 @@
     },
     "/interview": {
       "post": {
-        "tags": ["Interview"],
+        "tags": [
+          "Interview"
+        ],
         "summary": "Create Interview",
         "requestBody": {
           "required": true,
@@ -584,8 +645,21 @@
         }
       },
       "get": {
-        "tags": ["Interview"],
+        "tags": [
+          "Interview"
+        ],
         "summary": "Get all Interviews",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter candidates"
+          }
+        ],
         "responses": {
           "200": {
             "description": "All Interview data showed successfully",
@@ -618,7 +692,9 @@
     },
     "/interview/{id}": {
       "get": {
-        "tags": ["Interview"],
+        "tags": [
+          "Interview"
+        ],
         "summary": "Get Interview",
         "parameters": [
           {
@@ -657,8 +733,10 @@
           }
         }
       },
-      "put" : {
-        "tags": ["Interview"],
+      "put": {
+        "tags": [
+          "Interview"
+        ],
         "summary": "Update Interview",
         "parameters": [
           {
@@ -671,19 +749,19 @@
             "required": "true"
           }
         ],
-        "requestBody" : {
-          "required" : true,
+        "requestBody": {
+          "required": true,
           "content": {
-            "application/json" : {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/InterviewBody"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Interview Updated Successfully.",
+        "responses": {
+          "200": {
+            "description": "Interview Updated Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -707,8 +785,10 @@
           }
         }
       },
-      "delete" : {
-        "tags": ["Interview"],
+      "delete": {
+        "tags": [
+          "Interview"
+        ],
         "summary": "Delete Interview",
         "parameters": [
           {
@@ -721,9 +801,9 @@
             "required": "true"
           }
         ],
-        "responses" : {
-          "200" : {
-            "description" : "Interview Deleted Successfully.",
+        "responses": {
+          "200": {
+            "description": "Interview Deleted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -747,7 +827,9 @@
     },
     "/note": {
       "post": {
-        "tags": ["Note"],
+        "tags": [
+          "Note"
+        ],
         "summary": "Create Note",
         "requestBody": {
           "required": true,
@@ -786,7 +868,9 @@
         }
       },
       "get": {
-        "tags": ["Note"],
+        "tags": [
+          "Note"
+        ],
         "summary": "Get all Note",
         "responses": {
           "200": {
@@ -820,7 +904,9 @@
     },
     "/note/{id}": {
       "get": {
-        "tags": ["Note"],
+        "tags": [
+          "Note"
+        ],
         "summary": "Get Note",
         "parameters": [
           {
@@ -859,8 +945,10 @@
           }
         }
       },
-      "put" : {
-        "tags": ["Note"],
+      "put": {
+        "tags": [
+          "Note"
+        ],
         "summary": "Update Note",
         "parameters": [
           {
@@ -873,19 +961,19 @@
             "required": "true"
           }
         ],
-        "requestBody" : {
-          "required" : true,
+        "requestBody": {
+          "required": true,
           "content": {
-            "application/json" : {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NoteBody"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Note Updated Successfully.",
+        "responses": {
+          "200": {
+            "description": "Note Updated Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -909,8 +997,10 @@
           }
         }
       },
-      "delete" : {
-        "tags": ["Note"],
+      "delete": {
+        "tags": [
+          "Note"
+        ],
         "summary": "Delete Note",
         "parameters": [
           {
@@ -923,9 +1013,9 @@
             "required": "true"
           }
         ],
-        "responses" : {
-          "200" : {
-            "description" : "Note Deleted Successfully.",
+        "responses": {
+          "200": {
+            "description": "Note Deleted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -949,7 +1039,9 @@
     },
     "/questions": {
       "post": {
-        "tags": ["Question and Answer"],
+        "tags": [
+          "Question and Answer"
+        ],
         "summary": "Create Question and Answer",
         "requestBody": {
           "required": true,
@@ -988,7 +1080,9 @@
         }
       },
       "get": {
-        "tags": ["Question and Answer"],
+        "tags": [
+          "Question and Answer"
+        ],
         "summary": "Get all Question and Answer",
         "responses": {
           "200": {
@@ -1022,7 +1116,9 @@
     },
     "/questions/{id}": {
       "get": {
-        "tags": ["Question and Answer"],
+        "tags": [
+          "Question and Answer"
+        ],
         "summary": "Get Question and Answer",
         "parameters": [
           {
@@ -1061,8 +1157,10 @@
           }
         }
       },
-      "put" : {
-        "tags": ["Question and Answer"],
+      "put": {
+        "tags": [
+          "Question and Answer"
+        ],
         "summary": "Update Question and Answer",
         "parameters": [
           {
@@ -1075,19 +1173,19 @@
             "required": "true"
           }
         ],
-        "requestBody" : {
-          "required" : true,
+        "requestBody": {
+          "required": true,
           "content": {
-            "application/json" : {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/QnABody"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Question and Answer Updated Successfully.",
+        "responses": {
+          "200": {
+            "description": "Question and Answer Updated Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1111,8 +1209,10 @@
           }
         }
       },
-      "delete" : {
-        "tags": ["Question and Answer"],
+      "delete": {
+        "tags": [
+          "Question and Answer"
+        ],
         "summary": "Delete Question and Answer",
         "parameters": [
           {
@@ -1125,9 +1225,9 @@
             "required": "true"
           }
         ],
-        "responses" : {
-          "200" : {
-            "description" : "Question and Answer Deleted Successfully.",
+        "responses": {
+          "200": {
+            "description": "Question and Answer Deleted Successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1151,8 +1251,10 @@
     },
     "dashboard/total": {
       "get": {
-        "tags": ["DashBoard"],
-        "summary": "Get Candidates, Technology, Interview" ,
+        "tags": [
+          "DashBoard"
+        ],
+        "summary": "Get Candidates, Technology, Interview",
         "responses": {
           "200": {
             "description": " All Total of Candidates, Technology, Interview showed Successfully",
@@ -1208,50 +1310,40 @@
         "type": "object",
         "properties": {
           "first_name": {
-            "type": "String",
-            "required": true,
-            "example": "Vegeta"
+            "type": "string",
+            "example": "Goku"
           },
           "last_name": {
-            "type": "String",
-            "required": true,
+            "type": "string",
             "example": "Saiyan"
           },
           "email": {
-            "type": "String",
-            "required": true,
-            "unique": true,
-            "example": "example@gmail.com"
+            "type": "string",
+            "example": "faizan2@gmail.com"
           },
           "phone_number": {
-            "type": "String",
-            "required": true,
-            "example": "12345"
-          },
-          "technology_id": {
             "type": "string",
-            "required": true,
-            "example": "ObjectId"
+            "example": "1234567678"
+          },
+          "skills": {
+            "type": "[string]",
+            "example": "Object ID"
           },
           "type": {
-            "type": "String",
-            "required": true,
-            "example": "WFH"
+            "type": "string",
+            "example": "office"
           },
           "gender": {
             "type": "string",
-            "required": true,
             "example": "male"
           },
-          "job_type": {
+          "job_role": {
             "type": "string",
-            "required": true,
-            "example": "backend developer"
+            "example": "Full stack Devaloper"
           },
           "resume": {
-            "type": "String",
-            "required": true,
-            "example": "image"
+            "type": "string",
+            "example": "Resume File"
           }
         }
       },
@@ -1289,7 +1381,7 @@
             "required": true
           },
           "round": {
-            "type":"string",
+            "type": "string",
             "example": "HR round",
             "required": true
           },
@@ -1297,12 +1389,25 @@
             "type": "String",
             "example": "Surat",
             "required": true
+          },
+          "status": {
+            "type": "string",
+            "example ": "create",
+            "required": true
           }
         }
       },
       "NoteBody": {
         "type": "object",
         "properties": {
+          "interview_id":{
+           "type":"objectId",
+           "example":"objectId"
+          },
+          "candidate":{
+            "type":"objectId",
+            "example":"objectId"
+          },
           "note_text": {
             "type": "string",
             "example": "This is sample note"
@@ -1313,18 +1418,18 @@
         "type": "object",
         "properties": {
           "technology": {
-            "type":"objectId",
-            "required":true,
+            "type": "objectId",
+            "required": true,
             "example": "objectId"
           },
-          "question":{
-            "type":"String",
-            "required":true,
+          "question": {
+            "type": "String",
+            "required": true,
             "example": "react framework is made up of which language"
           },
-          "answer":{
-            "type":"String",
-            "required":true,
+          "answer": {
+            "type": "String",
+            "required": true,
             "example": "react is js framework"
           }
         }
@@ -1371,8 +1476,8 @@
             "type": "string",
             "example": "1234567678"
           },
-          "technology_id": {
-            "type": "string",
+          "skills": {
+            "type": "[string]",
             "example": "Object ID"
           },
           "type": {
@@ -1383,9 +1488,9 @@
             "type": "string",
             "example": "male"
           },
-          "job_type": {
+          "job_role": {
             "type": "string",
-            "example": "backend developer"
+            "example": "Full stack Devaloper"
           },
           "resume": {
             "type": "string",
@@ -1396,14 +1501,15 @@
       "CandidateRoleResponse": {
         "type": "object",
         "properties": {
-          "technology_name": {
-            "type": "array",
-            "items": "string",
-            "example": ["Product Manager - IT",
+          "data": {
+            "type": "string[]",
+            "example": [
+              "Product Manager - IT",
               "Quality Assurance Engineer",
               "Scrum Master",
               "Security Engineer",
-              "Software Engineer"]
+              "Software Engineer"
+            ]
           }
         }
       },
@@ -1417,35 +1523,50 @@
         }
       },
       "InterviewResponse": {
-        "candidate_id": {
-          "type": "objectId",
-          "example" : "66719260e281ef29a9375f9b"
-        },
-        "created_by": {
-          "type": "objectId",
-          "example" : "667129fc98c7c4dd7e2956b4"
-        },
-        "interview_date": {
-          "type": "Date",
-          "example" : "10-10-10"
-        },
-        "interview_type": {
-          "type": "string",
-          "example" : "Online"
-        },
-        "round": {
-          "type": "string",
-          "example": "HR round"
-        },
-        "location": {
-          "type": "String",
-          "example" : "Surat"
+        "type": "object",
+        "properties": {
+          "candidate_id": {
+            "type": "objectId",
+            "example": "66719260e281ef29a9375f9b"
+          },
+          "created_by": {
+            "type": "objectId",
+            "example": "667129fc98c7c4dd7e2956b4"
+          },
+          "interview_date": {
+            "type": "Date",
+            "example": "10-10-10"
+          },
+          "interview_type": {
+            "type": "string",
+            "example": "Online"
+          },
+          "round": {
+            "type": "string",
+            "example": "HR round"
+          },
+          "location": {
+            "type": "String",
+            "example": "Surat"
+          },
+          "status": {
+            "type": "string",
+            "example":"create"
+          } 
         }
       },
       "NoteResponse": {
         "type": "object",
         "properties": {
-          "technology_name": {
+          "interview_id": {
+            "type": "objectId",
+            "example": "66719260e281ef29a9375f9b"
+          },
+          "candidate": {
+            "type": "objectId",
+            "example": "667129fc98c7c4dd7e2956b4"
+          },
+          "note_text": {
             "type": "string",
             "example": "This is sample note"
           }
@@ -1455,15 +1576,15 @@
         "type": "object",
         "properties": {
           "technology": {
-            "type":"objectId",
+            "type": "objectId",
             "example": "6685221f4ac0e03fc6e3cce7"
           },
-          "question":{
-            "type":"String",
+          "question": {
+            "type": "String",
             "example": "react framework is made up of which language"
           },
-          "answer":{
-            "type":"String",
+          "answer": {
+            "type": "String",
             "example": "react is js framework"
           }
         }

@@ -22,14 +22,46 @@ export class TechController {
 
     async getTechnologies(req, res) {
         try {
-            const data = await Technology.find();
-            successResponse(res, data, "All Technology Showed Successfully")
+            let { page=1 ,limit=5} = req.query;
+            page = parseInt(page, 10);
+            limit = parseInt(limit, 10);
+            let data;
+            let totalItems;
+            let totalPages = 1;
+            
+            if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
+                data = await Technology.find();
+                totalItems = data.length;
+            } else {
+                // Calculate offset
+                const offset = (page - 1) * limit;
+    
+                data = await Technology.find().skip(offset).limit(limit);
+    
+                // Get total count of documents
+                totalItems = await Technology.countDocuments();
+    
+                // Calculate total pages
+                totalPages = Math.ceil(totalItems / limit);
+            }
+    
+            // Response with paginated data or all data
+            const response = {
+                data,
+                meta: {
+                    totalItems,
+                    totalPages,
+                    currentPage: isNaN(page) || page < 1 ? 1 : page,
+                    itemsPerPage: isNaN(limit) || limit < 1 ? totalItems : limit
+                }
+            };
+    
+            successResponse(res, response, "Technologies fetched successfully");
         } catch (err) {
-            console.log("GET ALL TECHNOLOGIES Error: ", err)
+            console.log("GET ALL TECHNOLOGIES Error: ", err);
             errorResponse(res, err.message, 400);
         }
     }
-
     async getTechnology(req, res) {
         try {
             const {id} = req.params;
@@ -43,6 +75,7 @@ export class TechController {
             errorResponse(res, err.message, 400);
         }
     }
+   
 
     async updateTechnology(req, res) {
         try {

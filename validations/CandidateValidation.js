@@ -4,10 +4,12 @@ import { body , param } from 'express-validator';
 export const candidateValidate = [
     body('first_name')
         .notEmpty().withMessage('please enter first name')
-        .matches(/^([a-zA-Z]+)$/).withMessage('please use only alphabets in first name') ,
+        .trim()
+        .matches(/^([a-zA-Z]+)$/).trim().withMessage('please use only alphabets in first name') ,
     body('last_name')
         .notEmpty().withMessage('please enter last name')
-        .matches(/^([a-zA-Z]+)$/).withMessage('please use only alphabets in last name') ,
+        .trim()
+        .matches(/^([a-zA-Z]+)$/).trim().withMessage('please use only alphabets in last name') ,
     body('email')
         .isEmail().withMessage('please enter a valid email address')
         .notEmpty().withMessage('please enter email address') ,
